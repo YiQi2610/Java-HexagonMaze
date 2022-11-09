@@ -2,10 +2,10 @@ package graph;
 
 public class Dijkstra {
 
-	private ShortestPaths shortestPath;
+	private ShortestPaths shortestPathRes;
 	private Vertex pivotVertex;
 			
-	public ShortestPaths dijkstra (Graph graph, Vertex startVertex, Vertex endVertex, ProcessedVertexes processedVertexes, Distance distance, MinDistance minDistance ) {
+	public ShortestPaths dijkstra (Graph graph, Vertex startVertex, Vertex endVertex, ProcessedVertexes processedVertexes, Distance distance, MinDistance minDistance, ShortestPaths shortestPaths ) {
 		processedVertexes.addProcessedVertex(startVertex);
 		pivotVertex = startVertex;
 		minDistance.setMinDist(startVertex, 0);
@@ -33,8 +33,8 @@ public class Dijkstra {
 			processedVertexes.addProcessedVertex(pivotVertex);
 		}
 		
-		shortestPath = shortestPath.getVertexShortestPath(pivotVertex);
-		return shortestPath ;
+		shortestPathRes = shortestPaths.getVertexShortestPath(pivotVertex);
+		return shortestPathRes ;
 	}
 
 	
