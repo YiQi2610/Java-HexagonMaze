@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,16 @@ public class Maze implements graph.Graph {
 		this.labyrinthe = new MazeBox[largeurMaze][longueurMaze];
 	}
 	
+	
+	public int getLargeurMaze() {
+		return largeurMaze;
+	}
+
+
+	public int getLongueurMaze() {
+		return longueurMaze;
+	}
+
 	//Function of getting a list of neighbors of a mazebox
 	public ArrayList <MazeBox> getNeighbours(MazeBox box) {
 		ArrayList <MazeBox> boxNeighbours = null;
@@ -102,8 +113,8 @@ public class Maze implements graph.Graph {
 		return weight;
 	}	
 	
-	public final void initFromTextFile(String fileName) throws MazeReadingException{
-		try (
+	public final void initFromTextFile(String fileName) throws MazeReadingException, Exception{
+		/**try (
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 		){
 			String line = br.readLine();
@@ -115,7 +126,62 @@ public class Maze implements graph.Graph {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}*/
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		int cpt = 0;
+		while(cpt < this.getLongueurMaze()) {
+			int lengthOfLine = line.length();
+			//If the length of line not equals to length of maze, throw a new exception
+			if(lengthOfLine != this.getLargeurMaze()) { throw new MazeReadingException(fileName,cpt+1); }
+			else {
+				for (int j = 0; j<lengthOfLine; j++) {
+					if(line.charAt(j)=='D') {
+						this.labyrinthe[cpt][j] = new DepartureBox(cpt,j,this);
+					}
+					else if(line.charAt(j)=='E') {
+						this.labyrinthe[cpt][j] = new EmptyBox(cpt,j,this);
+					}
+					else if(line.charAt(j)=='A') {
+						this.labyrinthe[cpt][j] = new ArrivalBox(cpt,j,this);
+					}
+					else if(line.charAt(j)=='W'){
+						this.labyrinthe[cpt][j] = new WallBox(cpt,j,this);
+					}
+					else { //If none of these 4 caraceters in presented
+						throw new MazeReadingException(fileName,cpt+1);
+					}
+				}
+			}
+			line = br.readLine();
+			cpt++;
 		}
-		
+		br.close();
+	}
+	
+	public final void saveToTextFile(String fileName) throws Exception {
+		PrintWriter pw = new PrintWriter(fileName) ;
+		for(int i = 0; i<this.getLongueurMaze(); i++) {
+			for(int j = 0; j<this.getLargeurMaze(); j++) {
+				String className = this.labyrinthe[i][j].getClass().getSimpleName();
+				if(className == "DepartureBox") {
+					pw.print('D');
+				}
+				else if(className == "ArrivalBox") {
+					pw.print('A');
+				}
+				else if(className == "EmptyBox") {
+					pw.print('E');
+				}
+				else if(className == "WallBox") {
+					pw.print('W');
+				}
+				else {
+					throw new Exception();
+				}
+			}
+			pw.print("\n");
+		}
+		pw.close();
 	}
 }
