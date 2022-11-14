@@ -14,4 +14,5 @@ public interface Vertex {
 	//To set the previous vertex of a vertex
 	public void setPrevious (Vertex prevVertex);
 	
+	public String getLabel() ;
 }
