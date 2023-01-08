@@ -1,3 +1,4 @@
+package maze;
 import graph.Vertex;
 
 public class WallBox extends MazeBox {
@@ -24,10 +25,5 @@ public class WallBox extends MazeBox {
 		return null;
 	}
 
-	@Override
-	public void setPrevious(Vertex prevVertex) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

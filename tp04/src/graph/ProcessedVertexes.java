@@ -8,7 +8,7 @@ public interface ProcessedVertexes {
 	//To find if a vertex is in processedVertexes
 	public boolean containVertex (Vertex vertex);
 	
-	//To get a processed vertex
-	public Vertex getProcessedVertex(int i);
+	//To get number of processed vertex
+	public int numberProcessedVertexes ();
 	
 }

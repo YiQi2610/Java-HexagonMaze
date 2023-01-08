@@ -1,3 +1,4 @@
+import maze.Maze;
 
 public class MainTest {
 

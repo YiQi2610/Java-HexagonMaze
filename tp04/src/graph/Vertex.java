@@ -11,8 +11,5 @@ public interface Vertex {
 	//To get a list of successors vertex
 	public Vertex[] getSuccesors();
 	
-	//To set the previous vertex of a vertex
-	public void setPrevious (Vertex prevVertex);
-	
 	public String getLabel() ;
 }

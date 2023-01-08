@@ -1,3 +1,4 @@
+package maze;
 import java.util.ArrayList;
 
 public abstract class MazeBox implements graph.Vertex{
@@ -5,6 +6,7 @@ public abstract class MazeBox implements graph.Vertex{
 	//Two attributs for coordinate
 	private int xBox;
 	private int yBox;
+	private char name;
 	private Maze refLabyrinthe;
 	
 	//Constructor
@@ -27,9 +29,25 @@ public abstract class MazeBox implements graph.Vertex{
 	public int getyBox() {
 		return yBox;
 	}
-
+	
 	public void setyBox(int yBox) {
 		this.yBox = yBox;
+	}
+	
+	
+	public String getLabel() {
+		String label = xBox + ":" + yBox;
+		return label;
+	}
+
+	//To set the box name with its function (wall, empty, arrival or departure)
+	public void setName(char name) {
+		this.name = name;
+	}
+	
+	//To know the function of the mazebox (is it a wall or an empty box?)
+	public char getName() {
+		return name;
 	}
 
 	public Maze getRefLabyrinthe() {
@@ -45,8 +63,4 @@ public abstract class MazeBox implements graph.Vertex{
 		return box.refLabyrinthe.getNeighbours(box);
 	}
 	
-	public String getLabel() {
-		String label = "(" + this.getxBox() + "," + this.getyBox() + ")";
-		return label ;
-	}
 }
