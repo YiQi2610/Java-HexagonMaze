@@ -10,4 +10,6 @@ public interface ShortestPaths {
 	public void setPrevious(Vertex vertex, Vertex prevVertex);
 	
 	List<Vertex> getShortestPath( Vertex endVertex );
+	
+	public int getSize();
 }

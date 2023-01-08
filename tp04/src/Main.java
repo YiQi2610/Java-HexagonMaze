@@ -1,7 +1,12 @@
+import java.util.Iterator;
+
 import graph.Dijkstra;
 import graph.MinDistance;
+import graph.MinDistanceImpl;
 import graph.ProcessedVertexes;
+import graph.ProcessedVertexesImpl;
 import graph.ShortestPaths;
+import graph.ShortestPathsImpl;
 import graph.Vertex;
 import maze.Maze;
 import maze.MazeBox;
@@ -10,9 +15,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		Maze labyrinthe = new Maze(10,10);
-		ShortestPaths result;
-		ProcessedVertexes processedVertexes;
-		MinDistance minDistance;
+		ShortestPaths result = new ShortestPathsImpl();
+		ProcessedVertexes processedVertexes = new ProcessedVertexesImpl();
+		MinDistance minDistance = new MinDistanceImpl();
 		
 		
 		try {
@@ -27,7 +32,8 @@ public class Main {
 		Vertex endVertex = labyrinthe.getEndBox();
 		result = Dijkstra.dijkstra(labyrinthe,startVertex,endVertex,processedVertexes,minDistance,result );
 		
-		System.out.println(result);
+		
+		System.out.println(result.getSize());
 		
 	}
 

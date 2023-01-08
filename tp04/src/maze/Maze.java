@@ -53,6 +53,23 @@ public class Maze implements graph.Graph {
 		int yCoord = box.getyBox();
 		Maze refLabyrinthe = box.getRefLabyrinthe();
 		
+		try {
+			MazeBox dNeighbour = labyrinthe[xCoord+1][yCoord];
+			boxNeighbours.add(dNeighbour);
+		}catch( Exception e) {};
+		try {
+			MazeBox uNeighbour = labyrinthe[xCoord-1][yCoord];
+			boxNeighbours.add(uNeighbour);
+		}catch( Exception e) {};
+		try {
+			MazeBox lNeighbour = labyrinthe[xCoord][yCoord-1];
+			boxNeighbours.add(lNeighbour);
+		}catch( Exception e) {};
+		try {
+			MazeBox rNeighbour = labyrinthe[xCoord][yCoord+1];
+			boxNeighbours.add(rNeighbour);
+		}catch( Exception e) {};
+		/**
 		//If the box selected is the first box
 		if(xCoord == 0 && yCoord == 0) { 
 			boxNeighbours.add(refLabyrinthe.labyrinthe[1][0]);
@@ -100,6 +117,7 @@ public class Maze implements graph.Graph {
 			boxNeighbours.add(refLabyrinthe.labyrinthe[xCoord-1][yCoord]);
 			boxNeighbours.add(refLabyrinthe.labyrinthe[xCoord+1][yCoord]);
 		}
+		*/
 		
 		return boxNeighbours;	
 	}

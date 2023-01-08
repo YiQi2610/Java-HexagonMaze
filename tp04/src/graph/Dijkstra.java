@@ -8,11 +8,11 @@ import maze.Maze;
 public class Dijkstra {
 			
 	public static ShortestPaths dijkstra (Graph graph, Vertex startVertex, Vertex endVertex, ProcessedVertexes processedVertexes, MinDistance minDistance, ShortestPaths shortestPaths ) {
-		ShortestPaths shortestPathRes = null;
+		//ShortestPaths shortestPathRes = new ShortestPathsImpl();
 		
 		//Set start vertex as pivot
 		Vertex pivotVertex = startVertex;
-		
+
 		//Add start vertex into list of processed vertexes
 		processedVertexes.addProcessedVertex(startVertex);
 		
@@ -30,7 +30,7 @@ public class Dijkstra {
 		}
 		
 		//Repeat the loop if processedVertexes doesn't contain endVertex
-		while(!processedVertexes.containVertex(endVertex)) {
+		while(!processedVertexes.containVertex(endVertex) && pivotVertex != null) {
 			
 			//Get a list of successor vertex of pivot
 			List<Vertex> succVertex = new ArrayList<Vertex>();
@@ -72,8 +72,9 @@ public class Dijkstra {
 			}
 		}
 		
-		shortestPathRes = (ShortestPaths) shortestPaths.getShortestPath(endVertex);
-		return shortestPathRes ;
+		//shortestPathRes = (ShortestPaths) shortestPaths.getShortestPath(endVertex);
+		
+		return shortestPaths ;
 	}
 
 	
