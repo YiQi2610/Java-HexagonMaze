@@ -45,30 +45,34 @@ public class Maze implements graph.Graph {
 		return endBox;
 	}
 
-	//Function of getting a list of neighbors of a mazebox
-	public ArrayList <MazeBox> getNeighbours(MazeBox box) {
-		ArrayList <MazeBox> boxNeighbours = new ArrayList <MazeBox>();
+	//Function of getting a list of successors of a mazebox
+	public List<Vertex> getSuccessors(Vertex vertex) {
+		List <Vertex> boxNeighbours = new ArrayList <Vertex>();
 		
-		int xCoord = box.getxBox();
-		int yCoord = box.getyBox();
-		Maze refLabyrinthe = box.getRefLabyrinthe();
+		int xCoord = ((MazeBox)vertex).getxBox();
+		int yCoord = ((MazeBox)vertex).getyBox();
+		Maze refLabyrinthe = ((MazeBox)vertex).getRefLabyrinthe();
 		
 		try {
 			MazeBox dNeighbour = labyrinthe[xCoord+1][yCoord];
-			boxNeighbours.add(dNeighbour);
-		}catch( Exception e) {};
+			if(!dNeighbour.isWall()) {
+				boxNeighbours.add(dNeighbour);
+			}}catch( Exception e) {};
 		try {
 			MazeBox uNeighbour = labyrinthe[xCoord-1][yCoord];
-			boxNeighbours.add(uNeighbour);
-		}catch( Exception e) {};
+			if(!uNeighbour.isWall()) {
+				boxNeighbours.add(uNeighbour);
+			}}catch( Exception e) {};
 		try {
 			MazeBox lNeighbour = labyrinthe[xCoord][yCoord-1];
-			boxNeighbours.add(lNeighbour);
-		}catch( Exception e) {};
+			if(!lNeighbour.isWall()) {
+				boxNeighbours.add(lNeighbour);
+			}}catch( Exception e) {};
 		try {
 			MazeBox rNeighbour = labyrinthe[xCoord][yCoord+1];
-			boxNeighbours.add(rNeighbour);
-		}catch( Exception e) {};
+			if(!rNeighbour.isWall()) {
+				boxNeighbours.add(rNeighbour);
+			}}catch( Exception e) {};
 		/**
 		//If the box selected is the first box
 		if(xCoord == 0 && yCoord == 0) { 
@@ -134,22 +138,22 @@ public class Maze implements graph.Graph {
 	}
 	
 	//To get a list of sucessors of a vertex in graph
-	public List<Vertex> getSuccessors(Vertex vertex) {
+	/*public List<Vertex> getSuccessors(Vertex vertex) {
 		List<Vertex> listSucessors = new ArrayList<Vertex>();
 		List<MazeBox> listNeighbors = new ArrayList<MazeBox>();
 		listNeighbors = getNeighbours((MazeBox) vertex);
 		for(MazeBox box : listNeighbors) {
-			if(!isWall(box)){
+			if(!box.isWall() && box!=null){
 				listSucessors.add(box);
 			}
 		}
 		return listSucessors;
-	}
+	}*/
 
 	//To get the weight between two vertexes
 	public int getWeight(Vertex src, Vertex dst) {
 		//If destination vertex is a wall box,we return infinity
-		if(isWall((MazeBox)dst)) {
+		if(((MazeBox)dst).isWall()) {
 			return Integer.MAX_VALUE;
 		}
 		else { //If vertex destination is neighbour of vertex source, return 1 , if no, return 0
@@ -246,11 +250,6 @@ public class Maze implements graph.Graph {
 		}
 	}
 	
-	//To identify whether the mazebox is a wall box
-	public boolean isWall(MazeBox box) {
-		if(box.getName()=='W') {
-			return true;
-		}
-		else { return false;}
-	}
+	
+	
 }

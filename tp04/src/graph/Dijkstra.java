@@ -30,7 +30,7 @@ public class Dijkstra {
 		}
 		
 		//Repeat the loop if processedVertexes doesn't contain endVertex
-		while(!processedVertexes.containVertex(endVertex) && pivotVertex != null) {
+		while(!processedVertexes.containVertex(endVertex) && pivotVertex !=null) {
 			
 			//Get a list of successor vertex of pivot
 			List<Vertex> succVertex = new ArrayList<Vertex>();
@@ -60,13 +60,16 @@ public class Dijkstra {
 					}
 				}
 			}
-			//add the next vertex with its predecessor into shortest path
-			shortestPaths.setPrevious(nextPivot, pivotVertex);
+			
+			//add the end vertex with its predecessor into shortest path
+			if(nextPivot == endVertex) {
+				shortestPaths.setPrevious(nextPivot, pivotVertex);
+			}
 			
 			//Set the next pivot vertex
 			pivotVertex = nextPivot;
 			
-			//Add the next pivor in processed Vertexes and remove it from notProcessed Vertex
+			//Add the next pivot in processed Vertexes and remove it from notProcessed Vertex
 			processedVertexes.addProcessedVertex(pivotVertex);
 			notProcessedVertex.remove(pivotVertex);
 			}

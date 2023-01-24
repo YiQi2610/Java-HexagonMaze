@@ -24,6 +24,10 @@ public class EmptyBox extends MazeBox {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public boolean isEmpty() {
+		return true;
+	}
 
 	
 

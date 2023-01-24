@@ -12,4 +12,6 @@ public interface Vertex {
 	public Vertex[] getSuccesors();
 	
 	public String getLabel() ;
+
+	
 }

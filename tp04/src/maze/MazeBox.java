@@ -57,10 +57,25 @@ public abstract class MazeBox implements graph.Vertex{
 	public void setRefLabyrinthe(Maze refLabyrinthe) {
 		this.refLabyrinthe = refLabyrinthe;
 	}
+
 	
-	//Ask for neighbors from labyrinth 
-	public ArrayList <MazeBox> getNeighboursList(MazeBox box) {
-		return box.refLabyrinthe.getNeighbours(box);
+	//To identify whether the mazebox is a wall box
+	public boolean isWall() {
+		return false;
+	}
+		
+	//To identify whether the mazebox is a departure box
+	public boolean isDeparture() {
+		return false;
 	}
 	
+	//To identify whether the mazebox is an empty box
+	public boolean isEmpty() {
+		return false;
+	}
+	
+	//To identify whether the mazebox is an arrival box
+	public boolean isArrival() {
+		return false;
+	}
 }

@@ -24,6 +24,10 @@ public class WallBox extends MazeBox {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	//To identify whether the mazebox is a wall box
+	public boolean isWall() {
+		return true;
+	}
 
 }

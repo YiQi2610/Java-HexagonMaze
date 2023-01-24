@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import graph.Dijkstra;
@@ -31,9 +33,17 @@ public class Main {
 		Vertex startVertex = labyrinthe.getStartBox();
 		Vertex endVertex = labyrinthe.getEndBox();
 		result = Dijkstra.dijkstra(labyrinthe,startVertex,endVertex,processedVertexes,minDistance,result );
+		System.out.println(result);
 		
+		ArrayList<Vertex> resVertex = (ArrayList<Vertex>) result.getShortestPath(endVertex);
+		System.out.println(resVertex);
 		
-		System.out.println(result.getSize());
+		for(Vertex vertex : resVertex) {
+			if(vertex!=null) {
+				System.out.println(vertex.getLabel());
+			}
+		}
+		
 		
 	}
 
