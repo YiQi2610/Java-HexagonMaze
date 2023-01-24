@@ -5,23 +5,22 @@ import java.awt.Dimension;
 
 import javax.swing.*;
 
+import view.menu.MenuBar;
+
 public class MazeFenetre extends JFrame {
 	
-	private final Menu menu;
-	
-	public static void main(String[] args) {
-	        new MazeFenetre();
-	}
+	private final MenuBar menuBar;
+	private final WindowPanel windowPanel;
 	
 	public MazeFenetre() {
 		super("Find the shortest path!");
 		
-		setJMenuBar(menu = new Menu(this));
+		setJMenuBar(menuBar = new MenuBar(this));
+		setContentPane(windowPanel = new WindowPanel(this));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(1000,1000));
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //setUndecorated(true); //
+   
 		pack();
 		setVisible(true);
 	}
