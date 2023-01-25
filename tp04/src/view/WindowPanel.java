@@ -10,6 +10,6 @@ public class WindowPanel extends JPanel {
    public WindowPanel(MazeFenetre mazeFenetre) {
       setLayout(new BorderLayout()) ;
 		
-      add(mazePanel = new MazePanel(mazeFenetre), BorderLayout.CENTER) ;
+      add(mazePanel = new MazePanel(mazeFenetre, 10, 10), BorderLayout.CENTER) ;
    }
 }

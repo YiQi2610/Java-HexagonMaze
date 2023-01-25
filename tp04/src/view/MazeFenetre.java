@@ -19,7 +19,7 @@ public class MazeFenetre extends JFrame {
 		setContentPane(windowPanel = new WindowPanel(this));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(1000,1000));
+		setPreferredSize(new Dimension(1500,1500));
    
 		pack();
 		setVisible(true);

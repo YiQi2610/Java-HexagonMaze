@@ -44,7 +44,28 @@ public class Maze implements graph.Graph {
 	public MazeBox getEndBox() {
 		return endBox;
 	}
-
+	
+	public void createHexagonMaze(int width, int height){
+		for(int i= 0; i<height; i++) {
+			for(int j=0; j<width; j++) {
+				//mazeHexagon[i][j].paint(graphics);
+			}
+		}
+		
+	}
+	
+	public void printMaze(ArrayList<Vertex> shortestPath) {
+		for(int i=0; i<this.largeurMaze; i++) {
+			for(int j=0; j<this.longueurMaze; j++) {
+				if(shortestPath.contains(labyrinthe[i][j]) && labyrinthe[i][j]!=startBox && labyrinthe[i][j]!=endBox ) {
+					System.out.print("*");
+				}
+				else {System.out.print(labyrinthe[i][j].getName());}
+			}
+			System.out.println();
+		}
+	}
+	
 	//Function of getting a list of successors of a mazebox
 	public List<Vertex> getSuccessors(Vertex vertex) {
 		List <Vertex> boxNeighbours = new ArrayList <Vertex>();
@@ -152,19 +173,7 @@ public class Maze implements graph.Graph {
 
 	//To get the weight between two vertexes
 	public int getWeight(Vertex src, Vertex dst) {
-		//If destination vertex is a wall box,we return infinity
-		if(((MazeBox)dst).isWall()) {
-			return Integer.MAX_VALUE;
-		}
-		else { //If vertex destination is neighbour of vertex source, return 1 , if no, return 0
-			List <Vertex> listNeighbours = new ArrayList<Vertex>();
-			if (listNeighbours.contains(dst)) {
-				return 1;
-			}
-			else {
-				return 0;
-			}
-		}
+		return 1;
 	}	
 	
 	public final void initFromTextFile(String fileName) throws MazeReadingException, Exception{

@@ -44,7 +44,7 @@ public class Main {
 			}
 		}
 		
-		
+		labyrinthe.printMaze(resVertex);
 	}
 
 }
