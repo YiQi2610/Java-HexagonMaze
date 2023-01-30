@@ -1,5 +1,10 @@
 package maze;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Polygon;
+
 public abstract class MazeBox implements graph.Vertex{
 	
 	//Two attributs for coordinate
@@ -77,4 +82,17 @@ public abstract class MazeBox implements graph.Vertex{
 	public boolean isArrival() {
 		return false;
 	}
+
+//	public void paint(Graphics graphics, int radius, Point center) {
+//		Polygon polygon = new Polygon();
+//
+//        for (int i = 0; i < 6; i++) {
+//            int xval = (int) (center.x + radius* Math.sqrt(3)/2*Math.cos(i * Math.PI / 3 + Math.PI/ 6));
+//            int yval = (int) (center.x + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
+//            polygon.addPoint(xval, yval);
+//        }
+//		
+//        graphics.drawPolygon(polygon);
+//        graphics.setColor(Color.darkGray);
+//	}
 }

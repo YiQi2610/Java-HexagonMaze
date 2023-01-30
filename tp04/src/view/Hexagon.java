@@ -24,7 +24,7 @@ public class Hexagon extends Polygon{
 
         for (int i = 0; i < 6; i++) {
             int xval = (int) (center.x + radius* Math.sqrt(3)/2*Math.cos(i * Math.PI / 3 + Math.PI/ 6));
-            int yval = (int) (center.x + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
+            int yval = (int) (center.y + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
             polygon.addPoint(xval, yval);
         }
 

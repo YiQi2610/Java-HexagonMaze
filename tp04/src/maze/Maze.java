@@ -1,4 +1,6 @@
 package maze;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.PrintWriter;
@@ -8,11 +10,12 @@ import java.util.Map;
 
 import graph.MinDistance;
 import graph.Vertex;
+import view.MazePanel;
 
 public class Maze implements graph.Graph {
 	
-	private int largeurMaze;
-	private int longueurMaze;
+	private final int largeurMaze;
+	private final int longueurMaze;
 	private MazeBox[][] labyrinthe;
 	private MazeBox startBox;
 	private MazeBox endBox;
@@ -45,12 +48,19 @@ public class Maze implements graph.Graph {
 		return endBox;
 	}
 	
-	public void createHexagonMaze(int width, int height){
-		for(int i= 0; i<height; i++) {
-			for(int j=0; j<width; j++) {
-				//mazeHexagon[i][j].paint(graphics);
-			}
-		}
+	public void createHexagonMaze(Graphics graphics){
+//		int radius = hexagonMaze.calculateRadius(longueurMaze,largeurMaze);
+//		for(int i= 0; i<longueurMaze; i++) {
+//			for(int j=0; j<largeurMaze; j++) {
+//				int x = (int)((int)(j*radius*1.5+radius));
+//				int y = (int)(int)((i*0.75*radius*Math.sqrt(3)+radius*Math.sqrt(3)/2));
+//				if(i % 2 != 0) {
+//					x += (int) (radius * 0.75);
+//				}
+//				hexagonMaze[i][j] = new EmptyBox(i,j,this); 
+//				hexagonMaze[i][j].paint(graphics,radius,new Point(x,y));
+//			}
+//		}
 		
 	}
 	
@@ -75,24 +85,34 @@ public class Maze implements graph.Graph {
 		Maze refLabyrinthe = ((MazeBox)vertex).getRefLabyrinthe();
 		
 		try {
-			MazeBox dNeighbour = labyrinthe[xCoord+1][yCoord];
-			if(!dNeighbour.isWall()) {
-				boxNeighbours.add(dNeighbour);
+			MazeBox rNeighbour = labyrinthe[xCoord+1][yCoord];
+			if(!rNeighbour.isWall()) {
+				boxNeighbours.add(rNeighbour);
 			}}catch( Exception e) {};
 		try {
-			MazeBox uNeighbour = labyrinthe[xCoord-1][yCoord];
-			if(!uNeighbour.isWall()) {
-				boxNeighbours.add(uNeighbour);
-			}}catch( Exception e) {};
-		try {
-			MazeBox lNeighbour = labyrinthe[xCoord][yCoord-1];
+			MazeBox lNeighbour = labyrinthe[xCoord-1][yCoord];
 			if(!lNeighbour.isWall()) {
 				boxNeighbours.add(lNeighbour);
 			}}catch( Exception e) {};
 		try {
-			MazeBox rNeighbour = labyrinthe[xCoord][yCoord+1];
-			if(!rNeighbour.isWall()) {
-				boxNeighbours.add(rNeighbour);
+			MazeBox ulNeighbour = labyrinthe[xCoord][yCoord-1];
+			if(!ulNeighbour.isWall()) {
+				boxNeighbours.add(ulNeighbour);
+			}}catch( Exception e) {};
+		try {
+			MazeBox dlNeighbour = labyrinthe[xCoord][yCoord+1];
+			if(!dlNeighbour.isWall()) {
+				boxNeighbours.add(dlNeighbour);
+			}}catch( Exception e) {};
+		try {
+			MazeBox urNeighbour = labyrinthe[xCoord+1][yCoord-1];
+			if(!urNeighbour.isWall()) {
+				boxNeighbours.add(urNeighbour);
+			}}catch( Exception e) {};
+		try {
+			MazeBox drNeighbour = labyrinthe[xCoord+1][yCoord+1];
+			if(!drNeighbour.isWall()) {
+				boxNeighbours.add(drNeighbour);
 			}}catch( Exception e) {};
 		/**
 		//If the box selected is the first box
@@ -191,10 +211,10 @@ public class Maze implements graph.Graph {
 					e.printStackTrace();
 				}*/
 		try (
-		BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+		BufferedReader br = new BufferedReader(new FileReader(fileName))) { //Use Files!!
 			String line = br.readLine();
 			int cpt = 0;
-			while(cpt < this.getLongueurMaze()) {
+			while(cpt < this.getLongueurMaze()) { //We don't know the length of maze!!
 				int lengthOfLine = line.length();
 				//If the length of line not equals to length of maze, throw a new exception
 				if(lengthOfLine != this.getLargeurMaze()) { throw new MazeReadingException(fileName,cpt+1); }
