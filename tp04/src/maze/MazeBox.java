@@ -83,16 +83,18 @@ public abstract class MazeBox implements graph.Vertex{
 		return false;
 	}
 
-//	public void paint(Graphics graphics, int radius, Point center) {
-//		Polygon polygon = new Polygon();
-//
-//        for (int i = 0; i < 6; i++) {
-//            int xval = (int) (center.x + radius* Math.sqrt(3)/2*Math.cos(i * Math.PI / 3 + Math.PI/ 6));
-//            int yval = (int) (center.x + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
-//            polygon.addPoint(xval, yval);
-//        }
-//		
-//        graphics.drawPolygon(polygon);
-//        graphics.setColor(Color.darkGray);
-//	}
+	public void paint(Graphics graphics, int radius, Point center) {
+		Polygon polygon = new Polygon();
+
+        for (int i = 0; i < 6; i++) {
+            int xval = (int) (center.x + radius* Math.sqrt(3)/2*Math.cos(i * Math.PI / 3 + Math.PI/ 6));
+            int yval = (int) (center.y + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
+            polygon.addPoint(xval, yval);
+        }
+        graphics.setColor(Color.gray);
+		graphics.fillPolygon(polygon);
+		graphics.setColor(Color.black);
+		graphics.drawPolygon(polygon);
+
+	}
 }

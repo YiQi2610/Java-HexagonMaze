@@ -11,7 +11,7 @@ public class ButtonPanel extends JPanel{
 	public ButtonPanel() {
 		super();
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(200,100));
+		setPreferredSize(new Dimension(500,100));
 		setBackground(Color.yellow);
 		
         
