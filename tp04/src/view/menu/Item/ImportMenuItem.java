@@ -3,6 +3,7 @@ package view.menu.Item;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
@@ -24,21 +25,24 @@ public class ImportMenuItem extends JMenuItem implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		File folder = new File("data");
 		File[] listOfFiles = folder.listFiles();
-		ArrayList<String> allMazeFiles = new ArrayList<String>();
+		int nbOfFiles = listOfFiles.length;
+		String[] allMazeFiles = new String[nbOfFiles];
 
-		for (int i = 0; i < listOfFiles.length; i++) {
+		for (int i = 0; i < nbOfFiles; i++) {
 		  if (listOfFiles[i].isFile()) {
-		    allMazeFiles.add(listOfFiles[i].getName());
+		    allMazeFiles[i]=listOfFiles[i].getName();
 		  }
 		}
 		
 		String input = (String)JOptionPane.showInputDialog(null, "Choose a Maze File",
-		        "Import your maze", JOptionPane.QUESTION_MESSAGE, null,listOfFiles,listOfFiles[0]);
-		
+		        "Import your maze", JOptionPane.QUESTION_MESSAGE, null,allMazeFiles,allMazeFiles[0]);
+
 		try {
 			mazeFenetre.getMazeModel().initFromTextFile("data/"+input);
 			
-		} catch (Exception e1) {
+		}catch(FileNotFoundException e1) {
+			e1.printStackTrace();
+		}catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}

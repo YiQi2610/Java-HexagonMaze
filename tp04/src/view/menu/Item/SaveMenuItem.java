@@ -21,7 +21,7 @@ public class SaveMenuItem extends JMenuItem implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int input = JOptionPane.showConfirmDialog(null, "Are you sure to save this maze");
+		int input = JOptionPane.showConfirmDialog(null, "Are you sure to save this maze?");
 		if(input==1 || input==2){return;}
 		else if(input==0) {
 			String fileName = JOptionPane.showInputDialog( "Enter file name :" );

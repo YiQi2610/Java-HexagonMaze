@@ -217,44 +217,49 @@ public class Maze implements graph.Graph {
 				}*/
 		try (
 				BufferedReader br = new BufferedReader(new FileReader(fileName))) { 
-			int nbOfLines = 0;
-			int nbOfColumns = 0;
-			while (br.readLine() != null) nbOfLines++;
+			//int nbOfLines = 0;
+			//int nbOfColumns = 0;
+			//while (br.readLine() != null) nbOfLines++;
 			String line = br.readLine();
-			nbOfColumns = line.length();
-			this.largeurMaze = nbOfColumns;
-			this.longueurMaze = nbOfLines;
+			//if(line!=null) {
+				//nbOfColumns = line.length();
+			//}	
+			//this.longueurMaze = nbOfLines;
 			MazeBox[][] newLabyrinthe = new EmptyBox[nbOfLines][nbOfColumns];
-
 			
-			int cpt = 0;
-			while(cpt < nbOfLines) { 
-				for (int j = 0; j<nbOfColumns; j++) {
-					if(line.charAt(j)=='D') {
-						newLabyrinthe[cpt][j] = new DepartureBox(cpt,j,this);
-						newLabyrinthe[cpt][j].setName('D');
-						this.startBox = labyrinthe[cpt][j];
+			int row = 0;
+			int col = 0;
+			while(line!=null) { 
+				while(line.charAt(col) != '\n' ) {
+					if(line.charAt(col)=='D') {
+						newLabyrinthe[row][col] = new DepartureBox (row,col,this);
+						//newLabyrinthe[row][col].setName('D');
+						this.startBox = labyrinthe[row][col];
 					}
-					else if(line.charAt(j)=='E') {
-						newLabyrinthe[cpt][j] = new EmptyBox(cpt,j,this);
-						newLabyrinthe[cpt][j].setName('E');
+					else if(line.charAt(col)=='E') {
+						newLabyrinthe[row][col] = new EmptyBox(row,col,this);
+						//newLabyrinthe[row][col].setName('E');
 					}
-					else if(line.charAt(j)=='A') {
-						newLabyrinthe[cpt][j] = new ArrivalBox(cpt,j,this);
-						newLabyrinthe[cpt][j].setName('A');
-						this.endBox = labyrinthe[cpt][j];
+					else if(line.charAt(col)=='A') {
+						newLabyrinthe[row][col] = new ArrivalBox(row,col,this);
+						newLabyrinthe[row][col].setName('A');
+						//this.endBox = labyrinthe[row][col];
 					}
-					else if(line.charAt(j)=='W'){
-						newLabyrinthe[cpt][j] = new WallBox(cpt,j,this);
-						newLabyrinthe[cpt][j].setName('W');
+					else if(line.charAt(col)=='W'){
+						newLabyrinthe[row][col] = new WallBox(row,col,this);
+						//newLabyrinthe[row][col].setName('W');
 					}
 					else { //If none of these 4 caraceters in presented
-						throw new MazeReadingException(fileName,cpt+1);
+						throw new MazeReadingException(fileName,row+1);
 					}
+					col++;
 				}
+				line = br.readLine();
+				row++;	
 			}
-			line = br.readLine();
-			cpt++;
+			this.largeurMaze = col;
+			this.longueurMaze = row;
+
 			setLabyrinthe(newLabyrinthe);
 			br.close();
 		}catch(IOException e) {
