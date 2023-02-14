@@ -12,6 +12,7 @@ import graph.ShortestPathsImpl;
 import graph.Vertex;
 import maze.Maze;
 import maze.MazeBox;
+import maze.MazeReadingException;
 
 public class Main {
 

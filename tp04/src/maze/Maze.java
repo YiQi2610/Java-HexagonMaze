@@ -2,6 +2,7 @@ package maze;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -102,17 +103,21 @@ public class Maze implements graph.Graph {
 	}
 
 	public void createHexagonMaze(Graphics graphics){
-		int radius = 800/(largeurMaze*2);
-
+		int radius = 0;
+		if(largeurMaze>=longueurMaze) {
+			radius = 1000/(largeurMaze*2);
+		}
+		else {
+			radius = 1000/(longueurMaze*2);
+		}
 		for(int row=0; row<longueurMaze; row++) {
-			for(int col=0; col<largeurMaze; col++) {
+			for(int col=0; col<largeurMaze; col++) {			
 				int cx = (int)(col*radius*1.5+radius);
 				int cy = (int)(int)((row*0.75*radius*Math.sqrt(3)+radius*Math.sqrt(3)/2));
 				if(row % 2 != 0) {
 					cx += (0.75*radius);
 				}
 				labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy));
-
 			}
 		}
 
@@ -217,20 +222,18 @@ public class Maze implements graph.Graph {
 				}*/
 		try (
 				BufferedReader br = new BufferedReader(new FileReader(fileName))) { 
-			//int nbOfLines = 0;
-			//int nbOfColumns = 0;
-			//while (br.readLine() != null) nbOfLines++;
-			String line = br.readLine();
-			//if(line!=null) {
-				//nbOfColumns = line.length();
-			//}	
-			//this.longueurMaze = nbOfLines;
-			MazeBox[][] newLabyrinthe = new EmptyBox[nbOfLines][nbOfColumns];
 			
+			int[] dimension = new int[2];		
+			dimension = findDimension(fileName);
+			
+			this.largeurMaze = dimension[0];
+			this.longueurMaze = dimension[1];
+			MazeBox[][] newLabyrinthe = new EmptyBox[dimension[1]][dimension[0]];
+			String line = br.readLine();
 			int row = 0;
 			int col = 0;
-			while(line!=null) { 
-				while(line.charAt(col) != '\n' ) {
+			while(row<dimension[1]) { 
+				while(col<dimension[0]) {
 					if(line.charAt(col)=='D') {
 						newLabyrinthe[row][col] = new DepartureBox (row,col,this);
 						//newLabyrinthe[row][col].setName('D');
@@ -242,25 +245,23 @@ public class Maze implements graph.Graph {
 					}
 					else if(line.charAt(col)=='A') {
 						newLabyrinthe[row][col] = new ArrivalBox(row,col,this);
-						newLabyrinthe[row][col].setName('A');
-						//this.endBox = labyrinthe[row][col];
+						//newLabyrinthe[row][col].setName('A');
+						this.endBox = labyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='W'){
 						newLabyrinthe[row][col] = new WallBox(row,col,this);
 						//newLabyrinthe[row][col].setName('W');
 					}
 					else { //If none of these 4 caraceters in presented
-						throw new MazeReadingException(fileName,row+1);
+						throw new MazeReadingException(fileName,row+1,"Invalid label of Mazebox");
 					}
 					col++;
 				}
 				line = br.readLine();
 				row++;	
 			}
-			this.largeurMaze = col;
-			this.longueurMaze = row;
-
-			setLabyrinthe(newLabyrinthe);
+			
+			this.setLabyrinthe(newLabyrinthe);
 			br.close();
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -292,6 +293,28 @@ public class Maze implements graph.Graph {
 			}
 		}
 		this.setLabyrinthe(newLabyrinthe);
+	}
+	
+	public int[] findDimension(String fileName) throws MazeReadingException {
+		int[] dimension = new int[2];
+		dimension[0] = 0;
+		dimension[1] = 1;
+		try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {		
+			String line = br.readLine();
+			if(line == null) {
+				throw new MazeReadingException(fileName, 1, "Empty file");
+			}
+			dimension[0] =line.length();
+			String row;
+			while ((row=br.readLine()) != null) {dimension[1]++;}
+			
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return dimension;		
 	}
 
 

@@ -7,18 +7,18 @@ import java.io.IOException;
 public class WindowPanel extends JPanel {
 
 	private final MazePanel mazePanel ;
-	private final DimensionPanel dimensionPanel;
+	private final ConfigurationPanel configurationPanel;
 
 	public WindowPanel(MazeFenetre mazeFenetre) {
 		setLayout(new BorderLayout()) ;
 
 		add(mazePanel = new MazePanel(mazeFenetre), BorderLayout.CENTER) ;
-		add(dimensionPanel = new DimensionPanel(mazeFenetre),BorderLayout.EAST);
+		add(configurationPanel = new ConfigurationPanel(mazeFenetre),BorderLayout.EAST);
 	}
 
 	public void notifyForUpdate() throws Exception {
 		mazePanel.notifyForUpdate();
-		dimensionPanel.notifyForUpdate();
+		configurationPanel.notifyForUpdate();
 
 	}
 }

@@ -21,6 +21,7 @@ public class DimensionPanel extends JPanel{
 	
 	private final JLabel widthLabel;
 	private final JLabel heightLabel;
+	private final JLabel createMazeLabel;
 	
 	private final MazeFenetre mazeFenetre;
 	
@@ -38,6 +39,7 @@ public class DimensionPanel extends JPanel{
 		this.widthField = new JTextField();
 		this.widthField.setPreferredSize(new Dimension(100,20));
 		
+		this.createMazeLabel = new JLabel("Create your Maze here!");
 		this.heightLabel = new JLabel("Height : ");
 		this.heightField = new JTextField();
 		this.heightField.setPreferredSize(new Dimension(100,20));
@@ -50,7 +52,7 @@ public class DimensionPanel extends JPanel{
 		fieldPane.add(widthField);
 		fieldPane.add(heightField);
 		
-		JButton okBtn = new JButton ("OK");
+		JButton okBtn = new JButton ("Create");
 		okBtn.setBounds(100,140,100,40);
 		okBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae) {
@@ -59,10 +61,11 @@ public class DimensionPanel extends JPanel{
             	mazeFenetre.getMazeModel().setDimension(widthGiven, heightGiven);
             }
         });
-		
-		add(labelPane, BorderLayout.EAST);
-		add(fieldPane, BorderLayout.LINE_END);
+		add(createMazeLabel,BorderLayout.NORTH);
+		add(labelPane, BorderLayout.CENTER);
+		add(fieldPane, BorderLayout.EAST);
 		add(okBtn, BorderLayout.SOUTH);
+
 	}
 
 	public void notifyForUpdate() {

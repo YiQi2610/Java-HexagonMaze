@@ -1,4 +1,5 @@
 import maze.Maze;
+import maze.MazeReadingException;
 
 public class MainTest {
 
