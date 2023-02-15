@@ -19,7 +19,8 @@ public class MazePanel extends JPanel{
 		setBackground(Color.white);
 		setVisible(true);
 		this.mazeFenetre = mazeFenetre;
-		
+		MazePanelMouseListener mazePanelMouseListener = new MazePanelMouseListener(mazeFenetre);
+		addMouseListener(mazePanelMouseListener);	
 	}
 	
 	
@@ -30,10 +31,7 @@ public class MazePanel extends JPanel{
 
 
 	public void notifyForUpdate() {
-//		if(mazeFenetre.getMazeModel().isModified()) {
-//			Graphics g = null;
-//			paintComponent(g);
-//		}
+		repaint();
 		
 	}
 	

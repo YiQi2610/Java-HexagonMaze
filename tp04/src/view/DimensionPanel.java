@@ -21,13 +21,14 @@ public class DimensionPanel extends JPanel{
 	
 	private final JLabel widthLabel;
 	private final JLabel heightLabel;
-	private final JLabel createMazeLabel;
+	private final JButton createMazeLabel;
 	
 	private final MazeFenetre mazeFenetre;
 	
 	public DimensionPanel(MazeFenetre mazeFenetre) {
 		super();
-		setSize(new Dimension(300,300));
+		//setSize(new Dimension(300,300));
+		setLayout(new GridLayout(4,1));
 		setBackground(Color.lightGray);
 		setVisible(true);
 		
@@ -39,33 +40,48 @@ public class DimensionPanel extends JPanel{
 		this.widthField = new JTextField();
 		this.widthField.setPreferredSize(new Dimension(100,20));
 		
-		this.createMazeLabel = new JLabel("Create your Maze here!");
 		this.heightLabel = new JLabel("Height : ");
 		this.heightField = new JTextField();
 		this.heightField.setPreferredSize(new Dimension(100,20));
 		
-		JPanel labelPane = new JPanel(new GridLayout(0,1));
-		labelPane.add(widthLabel);
-		labelPane.add(heightLabel);
+		JPanel widthPane = new JPanel();
+		widthPane.add(widthLabel);
+		widthPane.add(widthField);
 		
-		JPanel fieldPane = new JPanel(new GridLayout(0,1));
-		fieldPane.add(widthField);
-		fieldPane.add(heightField);
+		JPanel heightPane = new JPanel();
+		heightPane.add(heightLabel);
+		heightPane.add(heightField);
 		
+		JPanel okBtnPane = new JPanel();
 		JButton okBtn = new JButton ("Create");
-		okBtn.setBounds(100,140,100,40);
+		okBtnPane.add(okBtn);
+		okBtn.setPreferredSize(new Dimension(150, 40));
 		okBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae) {
             	int widthGiven = Integer.parseInt(widthField.getText());
             	int heightGiven = Integer.parseInt(heightField.getText());
             	mazeFenetre.getMazeModel().setDimension(widthGiven, heightGiven);
+            	
             }
         });
-		add(createMazeLabel,BorderLayout.NORTH);
-		add(labelPane, BorderLayout.CENTER);
-		add(fieldPane, BorderLayout.EAST);
-		add(okBtn, BorderLayout.SOUTH);
+		
+		JPanel mazeLabelPane = new JPanel();
+		this.createMazeLabel = new JButton("Create your Maze");
+		mazeLabelPane.add(createMazeLabel);
+		createMazeLabel.setPreferredSize(new Dimension(150, 40));
+		mazeLabelPane.add(createMazeLabel);
+		add(mazeLabelPane);
+		
+		//createMazeLabel.addActionListener(new ActionListener(){
+			//public void actionPerformed(ActionEvent e) {
+				//JPanel panelDimension = new JPanel(new GridLayout(3,1));
+				add(widthPane);
+				add(heightPane);
+				add(okBtnPane);
 
+			//}
+			
+		//});
 	}
 
 	public void notifyForUpdate() {

@@ -91,7 +91,7 @@ public abstract class MazeBox implements graph.Vertex{
             int yval = (int) (center.y + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
             polygon.addPoint(xval, yval);
         }
-        graphics.setColor(Color.gray);
+        graphics.setColor(Color.lightGray);
 		graphics.fillPolygon(polygon);
 		graphics.setColor(Color.black);
 		graphics.drawPolygon(polygon);

@@ -17,6 +17,7 @@ public class WindowPanel extends JPanel {
 	}
 
 	public void notifyForUpdate() throws Exception {
+		
 		mazePanel.notifyForUpdate();
 		configurationPanel.notifyForUpdate();
 

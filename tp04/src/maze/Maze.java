@@ -83,6 +83,16 @@ public class Maze implements graph.Graph {
 	public MazeBox[][] getLabyrinthe() {
 		return labyrinthe;
 	}
+	
+	public void setStartBox(MazeBox startBox) {
+		this.startBox = startBox;
+		stateChanges();
+	}
+
+	public void setEndBox(MazeBox endBox) {
+		this.endBox = endBox;
+		stateChanges();
+	}
 
 	public void setLargeurMaze(int largeurMaze) {
 		this.largeurMaze = largeurMaze;
@@ -111,13 +121,14 @@ public class Maze implements graph.Graph {
 			radius = 1000/(longueurMaze*2);
 		}
 		for(int row=0; row<longueurMaze; row++) {
-			for(int col=0; col<largeurMaze; col++) {			
+			for(int col=0; col<largeurMaze; col++) {	
+
 				int cx = (int)(col*radius*1.5+radius);
 				int cy = (int)(int)((row*0.75*radius*Math.sqrt(3)+radius*Math.sqrt(3)/2));
 				if(row % 2 != 0) {
 					cx += (0.75*radius);
 				}
-				labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy));
+				this.labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy));
 			}
 		}
 
@@ -207,32 +218,19 @@ public class Maze implements graph.Graph {
 	}	
 
 	public final void initFromTextFile(String fileName) throws MazeReadingException, Exception{
-		/**try (
-					BufferedReader br = new BufferedReader(new FileReader(fileName));
-				){
-					String line = br.readLine();
-					while(line != null) {
-						System.out.println(line);
-						line = br.readLine();
-					}
-					br.close();
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}*/
 		try (
 				BufferedReader br = new BufferedReader(new FileReader(fileName))) { 
 			
 			int[] dimension = new int[2];		
 			dimension = findDimension(fileName);
 			
-			this.largeurMaze = dimension[0];
-			this.longueurMaze = dimension[1];
+			setLargeurMaze(dimension[0]);
+			setLongueurMaze(dimension[1]);
 			MazeBox[][] newLabyrinthe = new EmptyBox[dimension[1]][dimension[0]];
 			String line = br.readLine();
-			int row = 0;
-			int col = 0;
+			int row = 0;			
 			while(row<dimension[1]) { 
+				int col = 0;
 				while(col<dimension[0]) {
 					if(line.charAt(col)=='D') {
 						newLabyrinthe[row][col] = new DepartureBox (row,col,this);
@@ -260,9 +258,11 @@ public class Maze implements graph.Graph {
 				line = br.readLine();
 				row++;	
 			}
-			
+
 			this.setLabyrinthe(newLabyrinthe);
 			br.close();
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}catch(Exception e) {
@@ -317,7 +317,12 @@ public class Maze implements graph.Graph {
 		return dimension;		
 	}
 
-
+	public char selectedHexagon(String typeOfHexagon) {
+		if(typeOfHexagon == "departure") {return 'D';}
+		else if(typeOfHexagon == "arrival") {return 'A';}
+		else if(typeOfHexagon == "wall") {return 'W';}
+		else {return 'E';}
+	}
 
 
 }
