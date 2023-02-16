@@ -15,7 +15,13 @@ import java.util.Observable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import graph.Dijkstra;
 import graph.MinDistance;
+import graph.MinDistanceImpl;
+import graph.ProcessedVertexes;
+import graph.ProcessedVertexesImpl;
+import graph.ShortestPaths;
+import graph.ShortestPathsImpl;
 import graph.Vertex;
 import view.Hexagon;
 import view.MazePanel;
@@ -33,6 +39,8 @@ public class Maze implements graph.Graph {
 	private Color arrBoxColor;
 	private Color depBoxColor;
 	private Color emptyBoxColor;
+	private Color pathBoxColor;
+	private int radiusHexgon;
 
 
 	public Maze(int largeurMaze, int longueurMaze) {
@@ -50,6 +58,7 @@ public class Maze implements graph.Graph {
 		this.wallBoxColor = Color.DARK_GRAY;
 		this.depBoxColor = Color.RED;
 		this.arrBoxColor = Color.BLUE;
+		this.pathBoxColor = Color.GREEN;
 		this.labyrinthe = new MazeBox[longueurMaze][largeurMaze];
 		for(int row = 0; row<longueurMaze ; row++) {
 			for(int col = 0; col<largeurMaze; col++) {
@@ -58,7 +67,7 @@ public class Maze implements graph.Graph {
 		}
 	}
 	
-	public void stateChanges() {
+	public void stateChanged() {
 		ChangeEvent evt = new ChangeEvent(this);
 		for(ChangeListener listener : listeners) {
 			listener.stateChanged(evt);
@@ -88,6 +97,10 @@ public class Maze implements graph.Graph {
 	public MazeBox getEndBox() {
 		return endBox;
 	}
+	
+	public int getRadiusHexagon() {
+		return radiusHexgon;
+	}
 		
 	public MazeBox[][] getLabyrinthe() {
 		return labyrinthe;
@@ -99,58 +112,76 @@ public class Maze implements graph.Graph {
 	public Color getDepBoxColor() {return depBoxColor;}
 
 	public Color getEmptyBoxColor() {return emptyBoxColor;}
+	
+	public Color getPathBoxColor() {return pathBoxColor;}
 
 	public void setWallBoxColor(Color wallBoxColor) {
 		this.wallBoxColor = wallBoxColor;
 		modified = true ;
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setArrBoxColor(Color arrBoxColor) {
 		this.arrBoxColor = arrBoxColor;
 		modified = true ;
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setDepBoxColor(Color depBoxColor) {
 		this.depBoxColor = depBoxColor;
 		modified = true ;
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setEmptyBoxColor(Color emptyBoxColor) {
 		this.emptyBoxColor = emptyBoxColor;
 		modified = true ;
-		stateChanges();
+		stateChanged();
 	}
+	
+	public void setPathBoxColor(Color pathBoxColor) {
+		this.pathBoxColor = pathBoxColor;
+		modified = true ;
+		stateChanged();
+	}
+
 	public void setStartBox(MazeBox startBox) {
 		this.startBox = startBox;
 		modified = true ;
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setEndBox(MazeBox endBox) {
 		this.endBox = endBox;
 		modified = true ;
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setLargeurMaze(int largeurMaze) {
 		this.largeurMaze = largeurMaze;
 		modified = true ; 
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setLongueurMaze(int longueurMaze) {
 		this.longueurMaze = longueurMaze;
 		modified = true ; 
-		stateChanges();
+		stateChanged();
 	}
 
 	public void setLabyrinthe(MazeBox[][] labyrinthe) {
 		this.labyrinthe = labyrinthe;
 		modified = true ; 
-		stateChanges();
+		stateChanged();
+	}
+	
+	public void setTypeBox(int row, int col, char type) {
+		if(type == 'E') { this.labyrinthe[row][col] = new EmptyBox(row,col,this);}
+		else if(type == 'W') { this.labyrinthe[row][col] = new WallBox(row,col,this);}
+		else if(type == 'D') { this.labyrinthe[row][col] = new DepartureBox(row,col,this);}
+		if(type == 'A') { this.labyrinthe[row][col] = new ArrivalBox(row,col,this);}
+		modified = true ; 
+		stateChanged();
 	}
 
 	public void createHexagonMaze(Graphics graphics){
@@ -162,6 +193,7 @@ public class Maze implements graph.Graph {
 		else {
 			radius = 1000/(longueurMaze*2);
 		}
+		this.radiusHexgon = radius;
 		for(int row=0; row<longueurMaze; row++) {
 			for(int col=0; col<largeurMaze; col++) {	
 				int cx = (int)(col*radius*1.5+radius);
@@ -169,10 +201,12 @@ public class Maze implements graph.Graph {
 				if(row % 2 != 0) {
 					cx += (0.75*radius);
 				}
-				if(labyrinthe[row][col].getName()=='E') {color = getEmptyBoxColor();}
+				if(labyrinthe[row][col].getName()=='E' && !labyrinthe[row][col].isPath()) {color = getEmptyBoxColor();}
+				else if (labyrinthe[row][col].getName()=='E' && labyrinthe[row][col].isPath()) {color = getPathBoxColor();}
 				else if (labyrinthe[row][col].getName()=='W') {color = getWallBoxColor();}
 				else if (labyrinthe[row][col].getName()=='A') {color = getArrBoxColor();}
 				else if (labyrinthe[row][col].getName()=='D') {color = getDepBoxColor();}
+				
 				this.labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy),color);
 			}
 		}
@@ -210,22 +244,30 @@ public class Maze implements graph.Graph {
 					boxNeighbours.add(lNeighbour);
 				}}catch( Exception e) {};
 				try {
-					MazeBox ulNeighbour = labyrinthe[xCoord][yCoord-1];
+					MazeBox ulNeighbour;
+					if(yCoord%2!=0) {ulNeighbour = labyrinthe[xCoord][yCoord-1];}
+					else{ulNeighbour = labyrinthe[xCoord-1][yCoord-1];}
 					if(!ulNeighbour.isWall()) {
 						boxNeighbours.add(ulNeighbour);
 					}}catch( Exception e) {};
 					try {
-						MazeBox dlNeighbour = labyrinthe[xCoord][yCoord+1];
+						MazeBox dlNeighbour;
+						if(yCoord%2!=0) {dlNeighbour = labyrinthe[xCoord][yCoord+1];}
+						else {dlNeighbour = labyrinthe[xCoord-1][yCoord+1];}
 						if(!dlNeighbour.isWall()) {
 							boxNeighbours.add(dlNeighbour);
 						}}catch( Exception e) {};
 						try {
-							MazeBox urNeighbour = labyrinthe[xCoord+1][yCoord-1];
+							MazeBox urNeighbour;
+							if(yCoord%2!=0) {urNeighbour = labyrinthe[xCoord+1][yCoord-1];}
+							else {urNeighbour = labyrinthe[xCoord][yCoord-1];}
 							if(!urNeighbour.isWall()) {
 								boxNeighbours.add(urNeighbour);
 							}}catch( Exception e) {};
 							try {
-								MazeBox drNeighbour = labyrinthe[xCoord+1][yCoord+1];
+								MazeBox drNeighbour;
+								if(yCoord%2!=0) { drNeighbour = labyrinthe[xCoord+1][yCoord+1];}
+								else {drNeighbour = labyrinthe[xCoord][yCoord+1];}
 								if(!drNeighbour.isWall()) {
 									boxNeighbours.add(drNeighbour);
 								}}catch( Exception e) {};
@@ -238,7 +280,7 @@ public class Maze implements graph.Graph {
 		List<Vertex> listAllVertex = new ArrayList<Vertex>();
 		for (int i = 0; i<longueurMaze; i++) {
 			for(int j=0; j<largeurMaze; j++) {
-				listAllVertex.add(labyrinthe[j][i]);
+				listAllVertex.add(labyrinthe[i][j]);
 			}
 		}
 		return listAllVertex;
@@ -279,14 +321,14 @@ public class Maze implements graph.Graph {
 				while(col<dimension[0]) {
 					if(line.charAt(col)=='D') {
 						newLabyrinthe[row][col] = new DepartureBox (row,col,this);
-						this.startBox = labyrinthe[row][col];
+						this.startBox = newLabyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='E') {
 						newLabyrinthe[row][col] = new EmptyBox(row,col,this);
 					}
 					else if(line.charAt(col)=='A') {
 						newLabyrinthe[row][col] = new ArrivalBox(row,col,this);
-						this.endBox = labyrinthe[row][col];
+						this.endBox = newLabyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='W'){
 						newLabyrinthe[row][col] = new WallBox(row,col,this);
@@ -363,6 +405,26 @@ public class Maze implements graph.Graph {
 		else if(typeOfHexagon == "arrival") {return 'A';}
 		else if(typeOfHexagon == "wall") {return 'W';}
 		else {return 'E';}
+	}
+
+	public void showShortestPath() {
+		ShortestPaths shortestPath = new ShortestPathsImpl();
+		ProcessedVertexes processedVertexes = new ProcessedVertexesImpl();
+		MinDistance minDistance = new MinDistanceImpl();
+		shortestPath = Dijkstra.dijkstra(this,startBox,endBox,processedVertexes,minDistance,shortestPath );	
+		System.out.println(shortestPath);
+		ArrayList<Vertex> resVertex = (ArrayList<Vertex>) shortestPath.getShortestPath(endBox);
+		System.out.println(resVertex);
+		for(int i=0; i<this.longueurMaze; i++) {
+			for(int j=0; j<this.largeurMaze; j++) {
+				if(resVertex.contains(labyrinthe[i][j]) && labyrinthe[i][j]!=startBox && labyrinthe[i][j]!=endBox ) {
+					System.out.println(labyrinthe[i][j].getLabel());
+					labyrinthe[i][j].setPath(true);
+				}
+			}
+		}
+		modified=true;
+		stateChanged();
 	}
 
 

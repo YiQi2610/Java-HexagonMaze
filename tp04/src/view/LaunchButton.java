@@ -18,7 +18,7 @@ public class LaunchButton extends JButton implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		mazeFenetre.getMazeModel().showShortestPath();
 		
 	}
 	public void notifyForUpfate() {

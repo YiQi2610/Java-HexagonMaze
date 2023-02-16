@@ -12,6 +12,7 @@ public abstract class MazeBox implements graph.Vertex{
 	private int yBox;
 	private char name;
 	private Maze refLabyrinthe;
+	private boolean isPath;
 	
 	
 	//Constructor
@@ -19,6 +20,7 @@ public abstract class MazeBox implements graph.Vertex{
 		super();
 		this.xBox = xBox;
 		this.yBox = yBox;
+		this.isPath = false;
 		this.refLabyrinthe = refLabyrinthe;
 	}
 
@@ -39,7 +41,14 @@ public abstract class MazeBox implements graph.Vertex{
 		this.yBox = yBox;
 	}
 	
-	
+	public boolean isPath() {
+		return isPath;
+	}
+
+	public void setPath(boolean isPath) {
+		this.isPath = isPath;
+	}
+
 	public String getLabel() {
 		String label = xBox + ":" + yBox;
 		return label;
