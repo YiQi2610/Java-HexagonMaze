@@ -2,7 +2,7 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Point;
-
+import java.awt.Toolkit;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -25,8 +25,10 @@ public class MazeFenetre extends JFrame implements ChangeListener {
 		setContentPane(windowPanel = new WindowPanel(this));
 		mazeModel.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(1500,800));		
-		pack();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    setSize(screenSize.width, screenSize.height);
+		//setPreferredSize(new Dimension(1500,800));		
+		//pack();
 		setVisible(true);
 	}
 		

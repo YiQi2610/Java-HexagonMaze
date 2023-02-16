@@ -1,4 +1,5 @@
 package maze;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.io.BufferedReader;
@@ -28,6 +29,10 @@ public class Maze implements graph.Graph {
 	private MazeBox endBox;
 	private boolean modified =  false;
 	private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
+	private Color wallBoxColor;
+	private Color arrBoxColor;
+	private Color depBoxColor;
+	private Color emptyBoxColor;
 
 
 	public Maze(int largeurMaze, int longueurMaze) {
@@ -40,7 +45,11 @@ public class Maze implements graph.Graph {
 	public Maze() {
 		super();
 		this.largeurMaze = 10;
-		this.longueurMaze = 10; 
+		this.longueurMaze = 10;
+		this.emptyBoxColor = Color.LIGHT_GRAY;
+		this.wallBoxColor = Color.DARK_GRAY;
+		this.depBoxColor = Color.RED;
+		this.arrBoxColor = Color.BLUE;
 		this.labyrinthe = new MazeBox[longueurMaze][largeurMaze];
 		for(int row = 0; row<longueurMaze ; row++) {
 			for(int col = 0; col<largeurMaze; col++) {
@@ -83,14 +92,46 @@ public class Maze implements graph.Graph {
 	public MazeBox[][] getLabyrinthe() {
 		return labyrinthe;
 	}
-	
+	public Color getWallBoxColor() {return wallBoxColor;}
+
+	public Color getArrBoxColor() {return arrBoxColor;}
+
+	public Color getDepBoxColor() {return depBoxColor;}
+
+	public Color getEmptyBoxColor() {return emptyBoxColor;}
+
+	public void setWallBoxColor(Color wallBoxColor) {
+		this.wallBoxColor = wallBoxColor;
+		modified = true ;
+		stateChanges();
+	}
+
+	public void setArrBoxColor(Color arrBoxColor) {
+		this.arrBoxColor = arrBoxColor;
+		modified = true ;
+		stateChanges();
+	}
+
+	public void setDepBoxColor(Color depBoxColor) {
+		this.depBoxColor = depBoxColor;
+		modified = true ;
+		stateChanges();
+	}
+
+	public void setEmptyBoxColor(Color emptyBoxColor) {
+		this.emptyBoxColor = emptyBoxColor;
+		modified = true ;
+		stateChanges();
+	}
 	public void setStartBox(MazeBox startBox) {
 		this.startBox = startBox;
+		modified = true ;
 		stateChanges();
 	}
 
 	public void setEndBox(MazeBox endBox) {
 		this.endBox = endBox;
+		modified = true ;
 		stateChanges();
 	}
 
@@ -114,6 +155,7 @@ public class Maze implements graph.Graph {
 
 	public void createHexagonMaze(Graphics graphics){
 		int radius = 0;
+		Color color = null;
 		if(largeurMaze>=longueurMaze) {
 			radius = 1000/(largeurMaze*2);
 		}
@@ -122,13 +164,16 @@ public class Maze implements graph.Graph {
 		}
 		for(int row=0; row<longueurMaze; row++) {
 			for(int col=0; col<largeurMaze; col++) {	
-
 				int cx = (int)(col*radius*1.5+radius);
 				int cy = (int)(int)((row*0.75*radius*Math.sqrt(3)+radius*Math.sqrt(3)/2));
 				if(row % 2 != 0) {
 					cx += (0.75*radius);
 				}
-				this.labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy));
+				if(labyrinthe[row][col].getName()=='E') {color = getEmptyBoxColor();}
+				else if (labyrinthe[row][col].getName()=='W') {color = getWallBoxColor();}
+				else if (labyrinthe[row][col].getName()=='A') {color = getArrBoxColor();}
+				else if (labyrinthe[row][col].getName()=='D') {color = getDepBoxColor();}
+				this.labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy),color);
 			}
 		}
 
@@ -226,7 +271,7 @@ public class Maze implements graph.Graph {
 			
 			setLargeurMaze(dimension[0]);
 			setLongueurMaze(dimension[1]);
-			MazeBox[][] newLabyrinthe = new EmptyBox[dimension[1]][dimension[0]];
+			MazeBox[][] newLabyrinthe = new MazeBox[dimension[1]][dimension[0]];
 			String line = br.readLine();
 			int row = 0;			
 			while(row<dimension[1]) { 
@@ -234,21 +279,17 @@ public class Maze implements graph.Graph {
 				while(col<dimension[0]) {
 					if(line.charAt(col)=='D') {
 						newLabyrinthe[row][col] = new DepartureBox (row,col,this);
-						//newLabyrinthe[row][col].setName('D');
 						this.startBox = labyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='E') {
 						newLabyrinthe[row][col] = new EmptyBox(row,col,this);
-						//newLabyrinthe[row][col].setName('E');
 					}
 					else if(line.charAt(col)=='A') {
 						newLabyrinthe[row][col] = new ArrivalBox(row,col,this);
-						//newLabyrinthe[row][col].setName('A');
 						this.endBox = labyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='W'){
 						newLabyrinthe[row][col] = new WallBox(row,col,this);
-						//newLabyrinthe[row][col].setName('W');
 					}
 					else { //If none of these 4 caraceters in presented
 						throw new MazeReadingException(fileName,row+1,"Invalid label of Mazebox");

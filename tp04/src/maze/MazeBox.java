@@ -13,6 +13,7 @@ public abstract class MazeBox implements graph.Vertex{
 	private char name;
 	private Maze refLabyrinthe;
 	
+	
 	//Constructor
 	public MazeBox(int xBox, int yBox, Maze refLabyrinthe) {
 		super();
@@ -62,7 +63,6 @@ public abstract class MazeBox implements graph.Vertex{
 		this.refLabyrinthe = refLabyrinthe;
 	}
 
-	
 	//To identify whether the mazebox is a wall box
 	public boolean isWall() {
 		return false;
@@ -82,8 +82,9 @@ public abstract class MazeBox implements graph.Vertex{
 	public boolean isArrival() {
 		return false;
 	}
+			
 
-	public void paint(Graphics graphics, int radius, Point center) {
+	public void paint(Graphics graphics, int radius, Point center, Color color) {
 		Polygon polygon = new Polygon();
 
         for (int i = 0; i < 6; i++) {
@@ -91,7 +92,7 @@ public abstract class MazeBox implements graph.Vertex{
             int yval = (int) (center.y + radius* Math.sqrt(3)/2*Math.sin(i * Math.PI / 3 + Math.PI/ 6));
             polygon.addPoint(xval, yval);
         }
-        graphics.setColor(Color.lightGray);
+        graphics.setColor(color);
 		graphics.fillPolygon(polygon);
 		graphics.setColor(Color.black);
 		graphics.drawPolygon(polygon);
