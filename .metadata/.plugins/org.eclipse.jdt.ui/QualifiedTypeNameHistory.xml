@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.io.FileOutputStream"/>
-    <fullyQualifiedTypeName name="java.io.PrintWriter"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="java.util.HashSet"/>
     <fullyQualifiedTypeName name="java.util.Set"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
@@ -28,9 +24,7 @@
     <fullyQualifiedTypeName name="view.MazeFenetre"/>
     <fullyQualifiedTypeName name="java.awt.Graphics"/>
     <fullyQualifiedTypeName name="view.MazePanel"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="maze.Maze"/>
-    <fullyQualifiedTypeName name="java.awt.Point"/>
     <fullyQualifiedTypeName name="view.Hexagon"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="javax.swing.JFormattedTextField"/>
@@ -60,4 +54,10 @@
     <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
     <fullyQualifiedTypeName name="view.MazePanelMouseListener"/>
+    <fullyQualifiedTypeName name="java.awt.Toolkit"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+    <fullyQualifiedTypeName name="java.awt.Component"/>
+    <fullyQualifiedTypeName name="java.awt.Point"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

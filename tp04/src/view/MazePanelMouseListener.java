@@ -6,8 +6,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+
 public class MazePanelMouseListener extends MouseAdapter implements MouseListener{
-	
+
 	private final MazeFenetre mazeFenetre;
 	
 	public MazePanelMouseListener(MazeFenetre mazeFenetre) {
@@ -16,17 +17,19 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	}
 	
 	public final void mouseClicked(MouseEvent e) {
-//		int x = e.getX();
-//	    int y = e.getY();
-//	    int x0 = 100;
-//	    int y0 = 100;
-//	    int s = mazeFenetre.getMazeModel().getRadiusHexagon();
-//	    int q = (int) Math.round((2.0/3 * (x - x0)) / s);
-//	    int r = (int) Math.round((-1.0/3 * (x - x0) + Math.sqrt(3)/3 * (y - y0)) / s);
-//	    if (q >= 0 && q <= 9 && r >= 0 && r <= 9) {
-//	        System.out.println(q);
-//	        System.out.println(r);
-//	    }
+		int x = e.getX()-10;
+	    int y = e.getY();
+	    
+	    int radius = mazeFenetre.getMazeModel().getRadiusHexagon();
+	    int row = (int)(y/(radius*1.5));
+	    int column = (int) ((x+radius-((row%2)*radius*Math.sqrt(3)/2))/(Math.sqrt(3)*radius));
+	    
+	    //int row = (int)(y-radius/2)/(radius*3);
+	    //int column = (int)((x-Math.sqrt(3)*radius*(row%2))/(Math.sqrt(3)*2*radius));
+	    //System.out.println(radius);
+	    System.out.println(row);
+	    System.out.println(column);
+
 	}
 
 }

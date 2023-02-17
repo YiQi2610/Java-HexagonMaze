@@ -65,6 +65,10 @@ public class Maze implements graph.Graph {
 				labyrinthe[row][col] = new EmptyBox(row, col,this);
 			}
 		}
+		List<Vertex> hi = getSuccessors(labyrinthe[0][9]);
+		for(Vertex vertex : hi) {
+			System.out.println(vertex.getLabel());
+		}
 	}
 	
 	public void stateChanged() {
@@ -232,45 +236,120 @@ public class Maze implements graph.Graph {
 		int xCoord = ((MazeBox)vertex).getxBox();
 		int yCoord = ((MazeBox)vertex).getyBox();
 		Maze refLabyrinthe = ((MazeBox)vertex).getRefLabyrinthe();
-
-		try {
+		
+		if(xCoord != largeurMaze-1) {
 			MazeBox rNeighbour = labyrinthe[xCoord+1][yCoord];
-			if(!rNeighbour.isWall()) {
+			if(!rNeighbour.isWall() && rNeighbour != null) {
 				boxNeighbours.add(rNeighbour);
-			}}catch( Exception e) {};
-			try {
-				MazeBox lNeighbour = labyrinthe[xCoord-1][yCoord];
-				if(!lNeighbour.isWall()) {
-					boxNeighbours.add(lNeighbour);
-				}}catch( Exception e) {};
-				try {
-					MazeBox ulNeighbour;
-					if(yCoord%2!=0) {ulNeighbour = labyrinthe[xCoord][yCoord-1];}
-					else{ulNeighbour = labyrinthe[xCoord-1][yCoord-1];}
-					if(!ulNeighbour.isWall()) {
-						boxNeighbours.add(ulNeighbour);
-					}}catch( Exception e) {};
-					try {
-						MazeBox dlNeighbour;
-						if(yCoord%2!=0) {dlNeighbour = labyrinthe[xCoord][yCoord+1];}
-						else {dlNeighbour = labyrinthe[xCoord-1][yCoord+1];}
-						if(!dlNeighbour.isWall()) {
-							boxNeighbours.add(dlNeighbour);
-						}}catch( Exception e) {};
-						try {
-							MazeBox urNeighbour;
-							if(yCoord%2!=0) {urNeighbour = labyrinthe[xCoord+1][yCoord-1];}
-							else {urNeighbour = labyrinthe[xCoord][yCoord-1];}
-							if(!urNeighbour.isWall()) {
-								boxNeighbours.add(urNeighbour);
-							}}catch( Exception e) {};
-							try {
-								MazeBox drNeighbour;
-								if(yCoord%2!=0) { drNeighbour = labyrinthe[xCoord+1][yCoord+1];}
-								else {drNeighbour = labyrinthe[xCoord][yCoord+1];}
-								if(!drNeighbour.isWall()) {
-									boxNeighbours.add(drNeighbour);
-								}}catch( Exception e) {};
+			}
+		}
+		
+		if(xCoord != 0) {
+			MazeBox lNeighbour = labyrinthe[xCoord-1][yCoord];
+			if(!lNeighbour.isWall() && lNeighbour != null) {
+				boxNeighbours.add(lNeighbour);
+			}
+		}
+		
+		if(xCoord != 0 && (yCoord %2!=0 && xCoord!=0)) {
+			MazeBox ulNeighbour;
+			if(yCoord%2!=0) {ulNeighbour = labyrinthe[xCoord][yCoord-1];}
+			else{ulNeighbour = labyrinthe[xCoord-1][yCoord-1];}
+			if(!ulNeighbour.isWall() && ulNeighbour != null) {
+				boxNeighbours.add(ulNeighbour);
+			}
+		}
+		
+		if(yCoord != longueurMaze-1 && (yCoord %2!=0 && xCoord != 0)) {
+			MazeBox dlNeighbour;
+			if(yCoord%2!=0) {dlNeighbour = labyrinthe[xCoord][yCoord+1];}
+			else {dlNeighbour = labyrinthe[xCoord-1][yCoord+1];}
+			if(!dlNeighbour.isWall() && dlNeighbour != null) {
+				boxNeighbours.add(dlNeighbour);
+			}
+		}
+		
+		if(xCoord!=0 && (yCoord %2==0 && xCoord != largeurMaze-1) ) {
+			MazeBox urNeighbour;
+			if(yCoord%2!=0) {urNeighbour = labyrinthe[xCoord+1][yCoord-1];}
+			else {urNeighbour = labyrinthe[xCoord][yCoord-1];}
+			if(!urNeighbour.isWall() && urNeighbour != null) {
+				boxNeighbours.add(urNeighbour);
+			}
+		}
+		
+		if(yCoord != longueurMaze-1 && (yCoord %2==0 && xCoord != largeurMaze-1) ) {
+			MazeBox drNeighbour;
+			if(yCoord%2!=0) { drNeighbour = labyrinthe[xCoord+1][yCoord+1];}
+			else {drNeighbour = labyrinthe[xCoord][yCoord+1];}
+			if(!drNeighbour.isWall() && drNeighbour != null) {
+				boxNeighbours.add(drNeighbour);
+			}
+		}
+		
+//		// Top-Left
+//	    if (xCoord > 0) {
+//	        if (yCoord > 0) {
+//	        	MazeBox ulNeighbour;
+//	        	if(yCoord%2!=0) {ulNeighbour = labyrinthe[xCoord][yCoord-1];}
+//				else{ulNeighbour = labyrinthe[xCoord-1][yCoord-1];}
+//				if(!ulNeighbour.isWall() && ulNeighbour != null) {
+//					boxNeighbours.add(ulNeighbour);
+//				}
+//	        }
+//	    }
+//	    
+//	    // Top-Right
+//	    if (xCoord > 0) {
+//	        if (yCoord < labyrinthe[xCoord-1].length-1) {
+//	        	MazeBox urNeighbour;
+//				if(yCoord%2!=0) {urNeighbour = labyrinthe[xCoord+1][yCoord-1];}
+//				else {urNeighbour = labyrinthe[xCoord][yCoord-1];}
+//				if(!urNeighbour.isWall() && urNeighbour != null) {
+//					boxNeighbours.add(urNeighbour);
+//				}
+//	        }
+//	    }
+//	    
+//	    // Left
+//	    if (yCoord > 0) {
+//	    	MazeBox lNeighbour = labyrinthe[xCoord-1][yCoord];
+//	    	if(!lNeighbour.isWall() && lNeighbour != null) {
+//				boxNeighbours.add(lNeighbour);
+//			}
+//	    }
+//	    
+//	    // Right
+//	    if (yCoord < labyrinthe[xCoord].length-1) {
+//	    	MazeBox rNeighbour = labyrinthe[xCoord+1][yCoord];
+//			if(!rNeighbour.isWall() && rNeighbour != null) {
+//				boxNeighbours.add(rNeighbour);
+//			}
+//	    }
+//	    
+//	    // Bottom-Left
+//	    if (xCoord < labyrinthe.length-1) {
+//	        if (yCoord > 0) {
+//	        	MazeBox dlNeighbour;
+//				if(yCoord%2!=0) {dlNeighbour = labyrinthe[xCoord][yCoord+1];}
+//				else {dlNeighbour = labyrinthe[xCoord-1][yCoord+1];}
+//				if(!dlNeighbour.isWall() && dlNeighbour != null) {
+//					boxNeighbours.add(dlNeighbour);
+//				}
+//	        }
+//	    }
+//	    
+//	    // Bottom-Right
+//	    if (xCoord < labyrinthe.length-1) {
+//	        if (yCoord < labyrinthe[xCoord+1].length-1) {
+//	        	MazeBox drNeighbour;
+//				if(yCoord%2!=0) { drNeighbour = labyrinthe[xCoord+1][yCoord+1];}
+//				else {drNeighbour = labyrinthe[xCoord][yCoord+1];}
+//				if(!drNeighbour.isWall() && drNeighbour != null) {
+//					boxNeighbours.add(drNeighbour);
+//				}
+//	        }
+//	    }
 
 		return boxNeighbours;	
 	}
@@ -412,17 +491,18 @@ public class Maze implements graph.Graph {
 		ProcessedVertexes processedVertexes = new ProcessedVertexesImpl();
 		MinDistance minDistance = new MinDistanceImpl();
 		shortestPath = Dijkstra.dijkstra(this,startBox,endBox,processedVertexes,minDistance,shortestPath );	
-		System.out.println(shortestPath);
+		//System.out.println(shortestPath);
 		ArrayList<Vertex> resVertex = (ArrayList<Vertex>) shortestPath.getShortestPath(endBox);
-		System.out.println(resVertex);
+		//System.out.println(resVertex);
 		for(int i=0; i<this.longueurMaze; i++) {
 			for(int j=0; j<this.largeurMaze; j++) {
 				if(resVertex.contains(labyrinthe[i][j]) && labyrinthe[i][j]!=startBox && labyrinthe[i][j]!=endBox ) {
-					System.out.println(labyrinthe[i][j].getLabel());
+					//System.out.println(labyrinthe[i][j].getLabel());
 					labyrinthe[i][j].setPath(true);
 				}
 			}
 		}
+		
 		modified=true;
 		stateChanged();
 	}
