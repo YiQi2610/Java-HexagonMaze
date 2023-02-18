@@ -31,6 +31,7 @@ public class ConfigurationPanel extends JPanel{
 		dimensionPanel.notifyForUpdate();
 		selectionPanel.notifyForUpdate();
 		launchButton.notifyForUpfate();
+		colorPanel.notifyForUpdate();
 	}
 
 }

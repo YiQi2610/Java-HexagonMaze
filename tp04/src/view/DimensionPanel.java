@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -29,7 +27,6 @@ public class DimensionPanel extends JPanel{
 		super();
 		//setSize(new Dimension(300,300));
 		setLayout(new GridLayout(4,1));
-		setBackground(Color.lightGray);
 		setVisible(true);
 		
 		this.mazeFenetre = mazeFenetre;
@@ -47,14 +44,17 @@ public class DimensionPanel extends JPanel{
 		JPanel widthPane = new JPanel();
 		widthPane.add(widthLabel);
 		widthPane.add(widthField);
+		widthPane.setVisible(false);
 		
 		JPanel heightPane = new JPanel();
 		heightPane.add(heightLabel);
 		heightPane.add(heightField);
+		heightPane.setVisible(false);
 		
 		JPanel okBtnPane = new JPanel();
 		JButton okBtn = new JButton ("Create");
 		okBtnPane.add(okBtn);
+		okBtnPane.setVisible(false);
 		okBtn.setPreferredSize(new Dimension(150, 40));
 		okBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae) {
@@ -72,16 +72,17 @@ public class DimensionPanel extends JPanel{
 		mazeLabelPane.add(createMazeLabel);
 		add(mazeLabelPane);
 		
-		//createMazeLabel.addActionListener(new ActionListener(){
-			//public void actionPerformed(ActionEvent e) {
-				//JPanel panelDimension = new JPanel(new GridLayout(3,1));
-				add(widthPane);
-				add(heightPane);
-				add(okBtnPane);
-
-			//}
-			
-		//});
+		createMazeLabel.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				widthPane.setVisible(true);
+				heightPane.setVisible(true);
+				okBtnPane.setVisible(true);
+			}	
+		});
+		
+		add(widthPane);
+		add(heightPane);
+		add(okBtnPane);
 	}
 
 	public void notifyForUpdate() {

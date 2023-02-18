@@ -2,37 +2,48 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ColorPanel extends JPanel{
-	private final JLabel emptyBoxLabel;
-	private final JLabel wallBoxLabel;
-	private final JLabel depBoxLabel;
-	private final JLabel arrBoxLabel;
-	private final JLabel pathBoxLabel;
+	private final MazeFenetre mazeFenetre;
+	private final String[] labels;
 	
 	
-	public ColorPanel(MazeFenetre mazeFenetre,Graphics g) {
-		setLayout(new GridLayout(5,2));
+	public ColorPanel(MazeFenetre mazeFenetre) {
+		//setLayout(new GridLayout(5,2));
+		this.mazeFenetre = mazeFenetre;
+		this.labels = new String[5];
 		
-		emptyBoxLabel = new JLabel("Empty Box");
-		wallBoxLabel = new JLabel("Wall Box");
-		depBoxLabel = new JLabel("Depature Box");
-		arrBoxLabel = new JLabel("Arrival Box");
-		pathBoxLabel = new JLabel("Path Box");
-		
-		JPanel emptyBoxPane = new JPanel();
-		((ColorPanel) emptyBoxPane).paintRect(g,mazeFenetre.getMazeModel().getEmptyBoxColor());
-		add(emptyBoxPane);
-		add(emptyBoxLabel);
+		labels[0] = "Empty Box";
+		labels[1] = "Wall Box";
+		labels[2] = "Departure Box";
+		labels[3] = "Arrival Box";
+		labels[4] = "Path Box";
+
 	}
 	
-	public void paintRect(Graphics g,Color color) {
-	    g.fillRect (10, 10, 200, 200);
-	    g.setColor(color);
+	 public void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.setColor(mazeFenetre.getMazeModel().getEmptyBoxColor());
+	        g.fillRect(10, 0, 35, 20);
+	        g.setColor(mazeFenetre.getMazeModel().getWallBoxColor());
+	        g.fillRect(10, 25, 35, 20);
+	        g.setColor(mazeFenetre.getMazeModel().getDepBoxColor());
+	        g.fillRect(10, 50, 35, 20);
+	        g.setColor(mazeFenetre.getMazeModel().getArrBoxColor());
+	        g.fillRect(10, 75, 35, 20);
+	        g.setColor(mazeFenetre.getMazeModel().getPathBoxColor());
+	        g.fillRect(10, 100, 35, 20);
+	        
+	        for(int i = 0; i<5; i++) {
+	        	g.setColor(Color.black);
+	        	g.drawString(labels[i], 60, 25*(i)+15);
+	        }
+	        
+	    }
+
+	public void notifyForUpdate() {
+		repaint();
+		
 	}
 }

@@ -28,15 +28,12 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	    	column = (int)((x+(radius*0.7)-((row%2)*radius*Math.sqrt(3)/2))/(Math.sqrt(3)*radius));
 	    }
 	    
-	    
-	    //int row = (int)(y-radius)/(radius*(2*3));
-	    //int column = (int)((x-Math.sqrt(3)*2*radius*(row%2))/(Math.sqrt(3)*4*radius));
-	    //System.out.println(radius);
-	    //System.out.println(x);
-	    //System.out.println(y);
 	    System.out.println(row);
 	    System.out.println(column);
 	    
+	    if(row>mazeFenetre.getMazeModel().getLongueurMaze()-1 || column>mazeFenetre.getMazeModel().getLongueurMaze()-1) {
+	    	return;
+	    }
 	    char type = mazeFenetre.getMazeModel().getSelectedTypeHexagon();
 	    if(type=='A' && mazeFenetre.getMazeModel().getEndBox()!=null) {
 	    	JOptionPane.showMessageDialog(mazeFenetre, "You have already selected Arrival Box!",

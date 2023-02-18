@@ -10,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 
 public class SelectionPanel extends JPanel{
 	
@@ -25,16 +26,16 @@ public class SelectionPanel extends JPanel{
 		setLayout(new GridLayout(5,1));
 				
 		modifyBtn = new JButton("Modify");
-		modifyBtn.setPreferredSize(new Dimension(150, 40));
+		modifyBtn.setPreferredSize(new Dimension(150, 35));
 		JPanel modifyBtnPane = new JPanel();
 		modifyBtnPane.add(modifyBtn);
-				
+					
 		selectDepBoxBtn = new JRadioButton("Select Departure Box");
 		selectArrBoxBtn = new JRadioButton("Select Arrival Box");
 		selectWallBoxBtn = new JRadioButton("Select Wall Box");
 		deselectWallBoxBtn = new JRadioButton("Deselect Box");
 		
-		JPanel radioButtons = new JPanel(new BorderLayout());
+		JPanel radioButtons = new JPanel();
 		ButtonGroup group = new ButtonGroup();
 		group.add(selectDepBoxBtn);
 		group.add(selectArrBoxBtn);
@@ -44,6 +45,10 @@ public class SelectionPanel extends JPanel{
 		radioButtons.add(selectArrBoxBtn);
 		radioButtons.add(selectWallBoxBtn);
 		radioButtons.add(deselectWallBoxBtn);
+		selectArrBoxBtn.setVisible(false);
+		selectDepBoxBtn.setVisible(false);
+		selectWallBoxBtn.setVisible(false);
+		deselectWallBoxBtn.setVisible(false);
 		
 		selectDepBoxBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -70,6 +75,16 @@ public class SelectionPanel extends JPanel{
 		});
 		
 		add(modifyBtnPane);
+		modifyBtn.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectArrBoxBtn.setVisible(true);	
+				selectDepBoxBtn.setVisible(true);
+				selectWallBoxBtn.setVisible(true);
+				deselectWallBoxBtn.setVisible(true);	
+			}
+		});
+			
 		add(selectDepBoxBtn);
 		add(selectArrBoxBtn);
 		add(selectWallBoxBtn);
