@@ -38,7 +38,7 @@ public class ImportMenuItem extends JMenuItem implements ActionListener{
 		        "Import your maze", JOptionPane.QUESTION_MESSAGE, null,allMazeFiles,allMazeFiles[0]);
 
 		try {
-			mazeFenetre.getMazeModel().initFromTextFile("data/"+input);
+			mazeFenetre.getMazeModel().initFromTextFile("data/"+input);			
 			
 		}catch(FileNotFoundException e1) {
 			e1.printStackTrace();

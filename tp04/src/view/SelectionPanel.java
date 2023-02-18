@@ -32,7 +32,7 @@ public class SelectionPanel extends JPanel{
 		selectDepBoxBtn = new JRadioButton("Select Departure Box");
 		selectArrBoxBtn = new JRadioButton("Select Arrival Box");
 		selectWallBoxBtn = new JRadioButton("Select Wall Box");
-		deselectWallBoxBtn = new JRadioButton("Deselect Wall Box");
+		deselectWallBoxBtn = new JRadioButton("Deselect Box");
 		
 		JPanel radioButtons = new JPanel(new BorderLayout());
 		ButtonGroup group = new ButtonGroup();
@@ -47,25 +47,25 @@ public class SelectionPanel extends JPanel{
 		
 		selectDepBoxBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mazeFenetre.getMazeModel().selectedHexagon("departure");
+				mazeFenetre.getMazeModel().setSelectedTypeHexagon('D');
 			}
 		});
 		
 		selectArrBoxBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mazeFenetre.getMazeModel().selectedHexagon("arrival");			
+				mazeFenetre.getMazeModel().setSelectedTypeHexagon('A');			
 			}
 		});
 		
 		selectWallBoxBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mazeFenetre.getMazeModel().selectedHexagon("wall");				
+				mazeFenetre.getMazeModel().setSelectedTypeHexagon('W');				
 			}
 		});
 		
 		deselectWallBoxBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mazeFenetre.getMazeModel().selectedHexagon("empty");				
+				mazeFenetre.getMazeModel().setSelectedTypeHexagon('E');				
 			}
 		});
 		

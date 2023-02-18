@@ -16,7 +16,7 @@ public class MazePanel extends JPanel{
 	
 	public MazePanel(MazeFenetre mazeFenetre) {
 		//setSize(new Dimension(1000,1000));
-		setBounds(100, 100, 800, 1000);
+		//setBounds(100, 100, 800, 1000);
 		setBackground(Color.white);
 		setVisible(true);
 		this.mazeFenetre = mazeFenetre;

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -41,6 +42,7 @@ public class Maze implements graph.Graph {
 	private Color emptyBoxColor;
 	private Color pathBoxColor;
 	private int radiusHexgon;
+	private char selectedTypeHexagon;
 
 
 	public Maze(int largeurMaze, int longueurMaze) {
@@ -114,6 +116,14 @@ public class Maze implements graph.Graph {
 	public Color getEmptyBoxColor() {return emptyBoxColor;}
 	
 	public Color getPathBoxColor() {return pathBoxColor;}
+	
+	public char getSelectedTypeHexagon() {return selectedTypeHexagon;}
+
+	public void setSelectedTypeHexagon(char selectedTypeHexagon) {
+		this.selectedTypeHexagon = selectedTypeHexagon;
+		modified = true ;
+		stateChanged();
+	}
 
 	public void setWallBoxColor(Color wallBoxColor) {
 		this.wallBoxColor = wallBoxColor;
@@ -176,10 +186,27 @@ public class Maze implements graph.Graph {
 	}
 	
 	public void setTypeBox(int row, int col, char type) {
-		if(type == 'E') { this.labyrinthe[row][col] = new EmptyBox(row,col,this);}
-		else if(type == 'W') { this.labyrinthe[row][col] = new WallBox(row,col,this);}
-		else if(type == 'D') { this.labyrinthe[row][col] = new DepartureBox(row,col,this);}
-		if(type == 'A') { this.labyrinthe[row][col] = new ArrivalBox(row,col,this);}
+		if(type == 'E') { 
+			if(this.labyrinthe[row][col].getName() == 'D') {
+				this.startBox = null;
+			}
+			else if(this.labyrinthe[row][col].getName() == 'A') {
+				this.endBox = null;
+			}
+			this.labyrinthe[row][col] = new EmptyBox(row,col,this);
+
+		}
+		else if(type == 'W') { 
+			this.labyrinthe[row][col] = new WallBox(row,col,this);
+		}
+		else if(type == 'D') { 
+			this.labyrinthe[row][col] = new DepartureBox(row,col,this);
+			setStartBox(labyrinthe[row][col]);
+		}
+		if(type == 'A') { 
+			this.labyrinthe[row][col] = new ArrivalBox(row,col,this);
+			setEndBox(labyrinthe[row][col]);
+		}
 		modified = true ; 
 		stateChanged();
 	}
@@ -229,71 +256,21 @@ public class Maze implements graph.Graph {
 	public List<Vertex> getSuccessors(Vertex vertex) {
 		List <Vertex> boxNeighbours = new ArrayList <Vertex>();
 
-		int xCoord = ((MazeBox)vertex).getxBox();
-		int yCoord = ((MazeBox)vertex).getyBox();
+		int row = ((MazeBox)vertex).getxBox();
+		int col = ((MazeBox)vertex).getyBox();
 		Maze refLabyrinthe = ((MazeBox)vertex).getRefLabyrinthe();
-		
-//		if(xCoord != largeurMaze-1) {
-//			MazeBox rNeighbour = labyrinthe[xCoord+1][yCoord];
-//			if(!rNeighbour.isWall() && rNeighbour != null) {
-//				boxNeighbours.add(rNeighbour);
-//			}
-//		}
-//		
-//		if(xCoord != 0) {
-//			MazeBox lNeighbour = labyrinthe[xCoord-1][yCoord];
-//			if(!lNeighbour.isWall() && lNeighbour != null) {
-//				boxNeighbours.add(lNeighbour);
-//			}
-//		}
-//		
-//		if(xCoord != 0 && (yCoord %2!=0 && xCoord!=0)) {
-//			MazeBox ulNeighbour;
-//			if(yCoord%2!=0) {ulNeighbour = labyrinthe[xCoord][yCoord-1];}
-//			else{ulNeighbour = labyrinthe[xCoord-1][yCoord-1];}
-//			if(!ulNeighbour.isWall() && ulNeighbour != null) {
-//				boxNeighbours.add(ulNeighbour);
-//			}
-//		}
-//		
-//		if(yCoord != longueurMaze-1 && (yCoord %2!=0 && xCoord != 0)) {
-//			MazeBox dlNeighbour;
-//			if(yCoord%2!=0) {dlNeighbour = labyrinthe[xCoord][yCoord+1];}
-//			else {dlNeighbour = labyrinthe[xCoord-1][yCoord+1];}
-//			if(!dlNeighbour.isWall() && dlNeighbour != null) {
-//				boxNeighbours.add(dlNeighbour);
-//			}
-//		}
-//		
-//		if(xCoord!=0 && (yCoord %2==0 && xCoord != largeurMaze-1) ) {
-//			MazeBox urNeighbour;
-//			if(yCoord%2!=0) {urNeighbour = labyrinthe[xCoord+1][yCoord-1];}
-//			else {urNeighbour = labyrinthe[xCoord][yCoord-1];}
-//			if(!urNeighbour.isWall() && urNeighbour != null) {
-//				boxNeighbours.add(urNeighbour);
-//			}
-//		}
-//		
-//		if(yCoord != longueurMaze-1 && (yCoord %2==0 && xCoord != largeurMaze-1) ) {
-//			MazeBox drNeighbour;
-//			if(yCoord%2!=0) { drNeighbour = labyrinthe[xCoord+1][yCoord+1];}
-//			else {drNeighbour = labyrinthe[xCoord][yCoord+1];}
-//			if(!drNeighbour.isWall() && drNeighbour != null) {
-//				boxNeighbours.add(drNeighbour);
-//			}
-//		}
-		
+
 		//Left Neighbour
-		if(yCoord != 0) {
-			MazeBox lNeighbour = labyrinthe[xCoord][yCoord-1];
+		if(col != 0) {
+			MazeBox lNeighbour = labyrinthe[row][col-1];
 			if(!lNeighbour.isWall() && lNeighbour != null) {
 				boxNeighbours.add(lNeighbour);
 			}
 		}
 		
 		//Right Neighbour
-		if(yCoord != largeurMaze-1) {
-			MazeBox rNeighbour = labyrinthe[xCoord][yCoord+1];
+		if(col != largeurMaze-1) {
+			MazeBox rNeighbour = labyrinthe[row][col+1];
 			if(!rNeighbour.isWall() && rNeighbour != null) {
 				boxNeighbours.add(rNeighbour);
 			}
@@ -301,14 +278,14 @@ public class Maze implements graph.Graph {
 		
 		//Upright Neighbour
 		MazeBox urNeighbour = null;
-		if(xCoord%2==0) { //row pair			
-			if(xCoord>0) {
-				urNeighbour = labyrinthe[xCoord-1][yCoord];
+		if(row%2==0) { //row pair			
+			if(row>0) {
+				urNeighbour = labyrinthe[row-1][col];
 			}
 		}
-		else if(xCoord%2!=0) {//row impair
-			if(yCoord<largeurMaze-1) {
-				urNeighbour = labyrinthe[xCoord-1][yCoord+1];
+		else if(row%2!=0) {//row impair
+			if(col<largeurMaze-1) {
+				urNeighbour = labyrinthe[row-1][col+1];
 			}
 		}
 		if(urNeighbour != null && !urNeighbour.isWall()) {
@@ -318,13 +295,13 @@ public class Maze implements graph.Graph {
 
 		//Upleft Neighbour
 		MazeBox ulNeighbour = null;
-		if(xCoord%2==0) { //row pair			
-			if(xCoord>0 && yCoord>0) {
-				ulNeighbour = labyrinthe[xCoord-1][yCoord-1];
+		if(row%2==0) { //row pair			
+			if(row>0 && col>0) {
+				ulNeighbour = labyrinthe[row-1][col-1];
 			}
 		}		
-		else if(xCoord%2!=0) {//row impair
-			ulNeighbour = labyrinthe[xCoord-1][yCoord];			
+		else if(row%2!=0) {//row impair
+			ulNeighbour = labyrinthe[row-1][col];			
 		}
 		if( ulNeighbour != null && !ulNeighbour.isWall()) {
 			boxNeighbours.add(ulNeighbour);
@@ -333,14 +310,14 @@ public class Maze implements graph.Graph {
 		
 		//DownRight Neighbour
 		MazeBox drNeighbour = null;
-		if(xCoord%2==0) {//row pair
-			if(xCoord <longueurMaze-1) {
-				drNeighbour = labyrinthe[xCoord+1][yCoord];
+		if(row%2==0) {//row pair
+			if(row <longueurMaze-1) {
+				drNeighbour = labyrinthe[row+1][col];
 			}
 		}
-		else if(xCoord%2!=0) {//row impair
-			if(xCoord<longueurMaze-1 && yCoord <largeurMaze-1) {
-				drNeighbour = labyrinthe[xCoord+1][yCoord+1];
+		else if(row%2!=0) {//row impair
+			if(row<longueurMaze-1 && col <largeurMaze-1) {
+				drNeighbour = labyrinthe[row+1][col+1];
 			}
 		}
 		if( drNeighbour != null && !drNeighbour.isWall()) {
@@ -349,14 +326,14 @@ public class Maze implements graph.Graph {
 
 		//DownLeft Neighbour
 		MazeBox dlNeighbour = null;
-		if(xCoord%2==0) {//row pair
-			if(xCoord <longueurMaze-1 && yCoord >0) {
-				dlNeighbour = labyrinthe[xCoord+1][yCoord-1];
+		if(row%2==0) {//row pair
+			if(row <longueurMaze-1 && col >0) {
+				dlNeighbour = labyrinthe[row+1][col-1];
 			}
 		}
-		else if(xCoord%2!=0) {//row impair
-			if(xCoord<longueurMaze-1) {
-				dlNeighbour = labyrinthe[xCoord+1][yCoord];
+		else if(row%2!=0) {//row impair
+			if(row<longueurMaze-1) {
+				dlNeighbour = labyrinthe[row+1][col];
 			}
 		}
 		if(dlNeighbour != null && !dlNeighbour.isWall() ) {
@@ -377,25 +354,14 @@ public class Maze implements graph.Graph {
 		return listAllVertex;
 	}
 
-	//To get a list of sucessors of a vertex in graph
-	/*public List<Vertex> getSuccessors(Vertex vertex) {
-		List<Vertex> listSucessors = new ArrayList<Vertex>();
-		List<MazeBox> listNeighbors = new ArrayList<MazeBox>();
-		listNeighbors = getNeighbours((MazeBox) vertex);
-		for(MazeBox box : listNeighbors) {
-			if(!box.isWall() && box!=null){
-				listSucessors.add(box);
-			}
-		}
-		return listSucessors;
-	}*/
-
 	//To get the weight between two vertexes
 	public int getWeight(Vertex src, Vertex dst) {
 		return 1;
 	}	
 
 	public final void initFromTextFile(String fileName) throws MazeReadingException, Exception{
+		this.startBox = null;
+		this.endBox = null;
 		try (
 				BufferedReader br = new BufferedReader(new FileReader(fileName))) { 
 			
@@ -457,10 +423,12 @@ public class Maze implements graph.Graph {
 	}
 
 	public void setDimension(int widthGiven, int heightGiven) {
+		setStartBox(null);
+		setEndBox(null);
 		this.setLargeurMaze(widthGiven);
 		this.setLongueurMaze(heightGiven);
 
-		MazeBox[][] newLabyrinthe = new EmptyBox[heightGiven][widthGiven];
+		MazeBox[][] newLabyrinthe = new MazeBox[heightGiven][widthGiven];
 		for(int row = 0; row<heightGiven ; row++) {
 			for(int col = 0; col<widthGiven; col++) {
 				newLabyrinthe[row][col] = new EmptyBox(row, col,this);
@@ -491,30 +459,34 @@ public class Maze implements graph.Graph {
 		return dimension;		
 	}
 
-	public char selectedHexagon(String typeOfHexagon) {
-		if(typeOfHexagon == "departure") {return 'D';}
-		else if(typeOfHexagon == "arrival") {return 'A';}
-		else if(typeOfHexagon == "wall") {return 'W';}
-		else {return 'E';}
-	}
-
 	public void showShortestPath() {
+		clearPath();
 		ShortestPaths shortestPath = new ShortestPathsImpl();
 		ProcessedVertexes processedVertexes = new ProcessedVertexesImpl();
 		MinDistance minDistance = new MinDistanceImpl();
 		shortestPath = Dijkstra.dijkstra(this,startBox,endBox,processedVertexes,minDistance,shortestPath );	
 		ArrayList<Vertex> resVertex = (ArrayList<Vertex>) shortestPath.getShortestPath(endBox);
-
+		if(!resVertex.contains(startBox)) {
+			modified=false;
+			return;
+		}
 		for(int i=0; i<this.longueurMaze; i++) {
 			for(int j=0; j<this.largeurMaze; j++) {
 				if(resVertex.contains(labyrinthe[i][j]) && labyrinthe[i][j]!=startBox && labyrinthe[i][j]!=endBox ) {
-					//System.out.println(labyrinthe[i][j].getLabel());
 					labyrinthe[i][j].setPath(true);
 				}
 			}
 		}
 		modified=true;
 		stateChanged();
+	}
+	
+	public void clearPath() {
+		for(int row = 0; row<longueurMaze ; row++) {
+			for(int col = 0; col<largeurMaze; col++) {
+				labyrinthe[row][col].setPath(false);
+			}
+		}
 	}
 
 

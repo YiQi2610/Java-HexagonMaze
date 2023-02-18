@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class LaunchButton extends JButton implements ActionListener{
 	private final MazeFenetre mazeFenetre;
@@ -19,6 +20,10 @@ public class LaunchButton extends JButton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		mazeFenetre.getMazeModel().showShortestPath();
+		if(mazeFenetre.getMazeModel().isModified()==false) {
+			JOptionPane.showMessageDialog(mazeFenetre, "No shortest path exists!",
+		               "Error!", JOptionPane.WARNING_MESSAGE);
+		}
 		
 	}
 	public void notifyForUpfate() {
