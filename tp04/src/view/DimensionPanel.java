@@ -55,7 +55,7 @@ public class DimensionPanel extends JPanel{
 		JButton okBtn = new JButton ("Create");
 		okBtnPane.add(okBtn);
 		okBtnPane.setVisible(false);
-		okBtn.setPreferredSize(new Dimension(150, 40));
+		okBtn.setPreferredSize(new Dimension(80, 30));
 		okBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae) {
             	int widthGiven = Integer.parseInt(widthField.getText());
@@ -74,9 +74,16 @@ public class DimensionPanel extends JPanel{
 		
 		createMazeLabel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				widthPane.setVisible(true);
-				heightPane.setVisible(true);
-				okBtnPane.setVisible(true);
+				if(!widthPane.isVisible()) {
+					widthPane.setVisible(true);
+					heightPane.setVisible(true);
+					okBtnPane.setVisible(true);
+				}
+				else {
+					widthPane.setVisible(false);
+					heightPane.setVisible(false);
+					okBtnPane.setVisible(false);
+				}
 			}	
 		});
 		

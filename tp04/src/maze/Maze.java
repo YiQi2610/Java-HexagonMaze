@@ -1,5 +1,6 @@
 package maze;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.io.BufferedReader;
@@ -9,10 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-
-import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -24,8 +21,7 @@ import graph.ProcessedVertexesImpl;
 import graph.ShortestPaths;
 import graph.ShortestPathsImpl;
 import graph.Vertex;
-import view.Hexagon;
-import view.MazePanel;
+
 
 public class Maze implements graph.Graph {
 
@@ -211,14 +207,15 @@ public class Maze implements graph.Graph {
 		stateChanged();
 	}
 
-	public void createHexagonMaze(Graphics graphics){
+	public void createHexagonMaze(Graphics graphics, Dimension d){
 		int radius = 0;
 		Color color = null;
+		int sizePane = (int) (d.getWidth()-(d.getWidth()*0.2));
 		if(largeurMaze>=longueurMaze) {
-			radius = 1000/(largeurMaze*2);
+			radius = (int) (sizePane/(largeurMaze*2));
 		}
 		else {
-			radius = 1000/(longueurMaze*2);
+			radius = (int) (sizePane/(longueurMaze*2));
 		}
 		this.radiusHexgon = radius;
 		for(int row=0; row<longueurMaze; row++) {
@@ -420,6 +417,7 @@ public class Maze implements graph.Graph {
 			}
 			pw.close();
 		}
+		modified = false;
 	}
 
 	public void setDimension(int widthGiven, int heightGiven) {

@@ -21,13 +21,13 @@ public class MazePanel extends JPanel{
 		setVisible(true);
 		this.mazeFenetre = mazeFenetre;
 		MazePanelMouseListener mazePanelMouseListener = new MazePanelMouseListener(mazeFenetre);
-		addMouseListener(mazePanelMouseListener);	
+		addMouseListener(mazePanelMouseListener);		
 	}
 	
 	
 	protected void paintComponent(Graphics g) { 
 		super.paintComponent(g);
-		mazeFenetre.getMazeModel().createHexagonMaze(g);    
+		mazeFenetre.getMazeModel().createHexagonMaze(g,this.getSize());  
     }
 
 

@@ -78,10 +78,18 @@ public class SelectionPanel extends JPanel{
 		modifyBtn.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectArrBoxBtn.setVisible(true);	
-				selectDepBoxBtn.setVisible(true);
-				selectWallBoxBtn.setVisible(true);
-				deselectWallBoxBtn.setVisible(true);	
+				if(!selectArrBoxBtn.isVisible()) {
+					selectArrBoxBtn.setVisible(true);	
+					selectDepBoxBtn.setVisible(true);
+					selectWallBoxBtn.setVisible(true);
+					deselectWallBoxBtn.setVisible(true);	
+				}
+				else {
+					selectArrBoxBtn.setVisible(false);	
+					selectDepBoxBtn.setVisible(false);
+					selectWallBoxBtn.setVisible(false);
+					deselectWallBoxBtn.setVisible(false);
+				}
 			}
 		});
 			

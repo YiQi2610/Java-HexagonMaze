@@ -27,8 +27,11 @@ public class QuitMenuItem extends JMenuItem implements ActionListener{
         				JOptionPane.YES_NO_CANCEL_OPTION,
         				JOptionPane.WARNING_MESSAGE,
         				null,null,null);
-    		if(input==JOptionPane.CANCEL_OPTION || input==JOptionPane.NO_OPTION ){
+    		if(input==JOptionPane.NO_OPTION ){
     			System.exit(0);
+    		}
+    		else if(input==JOptionPane.CANCEL_OPTION ) {
+    			return;
     		}
     		else if(input==JOptionPane.OK_OPTION) {
     			String fileName = JOptionPane.showInputDialog( "Enter file name :" );
