@@ -4,9 +4,9 @@ In this application, you can create a hexagon maze by giving its width and its h
 This application is fully developped with [Java](https://www.java.com/en/) and it uses Java Swing for interface.
 
 ## Summary
-- [What is the aim of project?]
-- [How to run and use this application?]
-- [Tips of usage]
+- [What is the aim of project?](what-is-the-aim-of-project-)
+- [How to run and use this application?](how-to-run-and-use-this-application-)
+- [Tips of usage](tips-of-usage)
 
 ## What is the aim of project?
 The goal of the project is to use implementation of Dijkstra's algorithm to solve a hexagonal maze and to provide a shortest path. Figure below shows an example of hexagonal maze with dimension of 10x10.
