@@ -10,7 +10,8 @@ This application is fully developped with [Java](https://www.java.com/en/) and i
 
 ## What is the aim of project?
 The goal of the project is to use implementation of Dijkstra's algorithm to solve a hexagonal maze and to provide a shortest path. Figure below shows an example of hexagonal maze with dimension of 10x10.
-![register](./projetJava/images/HexagonMaze.png)
+
+![hexagon-maze](./projetJava/images/HexagonMaze.png)
 
 Every odd-numbered row is shifted to the right and every hexagon case has 6 neighbors surrounding it.
 
@@ -25,4 +26,12 @@ The main functions of this applcation are:
 - Import maze 
 
 ## How to run and use this application?
+1. Download this application with git clone.
+2. In folder projetJava, go to folder src and run "MainFenetre.java" with an environment IDE (Eclipse prefered). An application interface appear as figure below.
+
+![interface](./projetJava/images/interface.png)
+
+3. Click on "Create your Maze" button and give height and width to create an empty labyrinth.
+
+![create-maze-button](./projetJava/images/createMazeBtn.png)
 
