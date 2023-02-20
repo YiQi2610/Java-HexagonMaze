@@ -24,6 +24,7 @@ private final MazeFenetre mazeFenetre;
 		Color newArrBoxColor = JColorChooser.showDialog(mazeFenetre,
 				"Change arrival box color",
 				mazeFenetre.getMazeModel().getArrBoxColor() );
+		if(newArrBoxColor==null) {return;}
 		mazeFenetre.getMazeModel().setArrBoxColor(newArrBoxColor);
 		
 	}
