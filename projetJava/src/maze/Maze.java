@@ -193,13 +193,25 @@ public class Maze implements graph.Graph {
 
 		}
 		else if(type == 'W') { 
+			if(this.labyrinthe[row][col].getName() == 'D') {
+				this.startBox = null;
+			}
+			else if(this.labyrinthe[row][col].getName() == 'A') {
+				this.endBox = null;
+			}
 			this.labyrinthe[row][col] = new WallBox(row,col,this);
 		}
 		else if(type == 'D') { 
+			if(this.labyrinthe[row][col].getName() == 'A') {
+				this.endBox = null;
+			}
 			this.labyrinthe[row][col] = new DepartureBox(row,col,this);
 			setStartBox(labyrinthe[row][col]);
 		}
 		if(type == 'A') { 
+			if(this.labyrinthe[row][col].getName() == 'D') {
+				this.startBox = null;
+			}
 			this.labyrinthe[row][col] = new ArrivalBox(row,col,this);
 			setEndBox(labyrinthe[row][col]);
 		}

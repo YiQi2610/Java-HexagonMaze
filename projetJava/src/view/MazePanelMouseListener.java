@@ -22,12 +22,12 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	    int radius = mazeFenetre.getMazeModel().getRadiusHexagon();
 	    int row = (int) (y/(radius*1.35));
 	    if(row%2==0) {
-	    	column = (int)((x+(radius*0.78))/(Math.sqrt(3)*radius));
-	    	//column = (int) ((x+(radius*0.8))/(radius*Math.sqrt(3)));
+	    	//column = (int)((x+(radius*0.78))/(Math.sqrt(3)*radius));
+	    	column = (int) (x/(radius*Math.sqrt(3)));
 	    }
 	    else {
-	    	column = (int)((x+(radius*0.77)-(radius*Math.sqrt(3)/2))/(Math.sqrt(3)*radius));
-	    	//column = (int) ((x-radius*Math.sqrt(3)/2)/(radius*Math.sqrt(3)));
+	    	//column = (int)((x+(radius*0.77)-(radius*Math.sqrt(3)/2))/(Math.sqrt(3)*radius));
+	    	column = (int) ((x-0.5*radius*Math.sqrt(3))/(radius*Math.sqrt(3)));
 	    }
 	    
 	    System.out.println(row);

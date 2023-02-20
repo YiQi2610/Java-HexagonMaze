@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -57,11 +58,15 @@ public class DimensionPanel extends JPanel{
 		okBtnPane.setVisible(false);
 		okBtn.setPreferredSize(new Dimension(80, 30));
 		okBtn.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ae) {
-            	int widthGiven = Integer.parseInt(widthField.getText());
-            	int heightGiven = Integer.parseInt(heightField.getText());
-            	mazeFenetre.getMazeModel().setDimension(widthGiven, heightGiven);
-            	
+            public void actionPerformed(ActionEvent ae){
+            	try {
+	            	int widthGiven = Integer.parseInt(widthField.getText());
+	            	int heightGiven = Integer.parseInt(heightField.getText());
+	            	mazeFenetre.getMazeModel().setDimension(widthGiven, heightGiven);
+            	}catch(NumberFormatException e){
+            		JOptionPane.showMessageDialog(mazeFenetre, "Height and width must be integer!",
+     		               "Error!", JOptionPane.WARNING_MESSAGE);
+            	}        	
             }
         });
 		

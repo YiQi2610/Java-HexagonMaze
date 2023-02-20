@@ -1,4 +1,4 @@
-package view;
+import view.MazeFenetre;
 
 public class MainFenetre {
 
