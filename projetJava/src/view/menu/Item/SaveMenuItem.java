@@ -25,6 +25,7 @@ public class SaveMenuItem extends JMenuItem implements ActionListener{
 		if(input==1 || input==2){return;}
 		else if(input==0) {
 			String fileName = JOptionPane.showInputDialog( "Enter file name :" );
+			if(fileName==null) {return;}
 			fileName = fileName +".txt";
 			try {
 				mazeFenetre.getMazeModel().saveToTextFile(fileName);
