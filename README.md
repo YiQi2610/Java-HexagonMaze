@@ -11,8 +11,8 @@ This application is fully developped with [Java](https://www.java.com/en/) and i
 ## What is the aim of project?
 The goal of the project is to use implementation of Dijkstra's algorithm to solve a hexagonal maze and to provide a shortest path. Figure below shows an example of hexagonal maze with dimension of 10x10.
 
-![hexagon-maze](./projetJava/images/HexagonMaze.png)
-<img src="https://github.com/favicon.ico" width="48">
+
+<img src="./projetJava/images/HexagonMaze.png" width="250" height="250">
 
 Every odd-numbered row is shifted to the right and every hexagon case has 6 neighbors surrounding it.
 
