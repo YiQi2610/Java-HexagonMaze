@@ -48,7 +48,11 @@ public abstract class MazeBox implements graph.Vertex{
 	public void setPath(boolean isPath) {
 		this.isPath = isPath;
 	}
-
+	
+	/**
+	 * To know the coordinates x and y of vertex 
+	 * @return String of "x:y"
+	 */
 	public String getLabel() {
 		String label = xBox + ":" + yBox;
 		return label;

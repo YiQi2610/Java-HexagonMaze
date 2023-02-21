@@ -7,24 +7,6 @@ public class EmptyBox extends MazeBox {
 		super(xBox, yBox, refLabyrinthe);
 		this.setName('E');
 	}
-
-	@Override
-	public Vertex getVertexNotProcessed() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vertex getPrevVertex() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vertex[] getSuccesors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	public boolean isEmpty() {
 		return true;
