@@ -5,7 +5,7 @@ This application is fully developped with [Java](https://www.java.com/en/) and i
 
 ## Summary
 - [What is the aim of project?](#what-is-the-aim-of-project-)
-- [How to run and use this application?](#how-to-run-and-use-this-application-)
+- [How to run and use this application?](#how-to-run-and-use-this-application)
 - [Tips of usage](#tips-of-usage)
 
 ## What is the aim of project?
