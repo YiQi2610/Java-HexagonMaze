@@ -35,3 +35,32 @@ The main functions of this applcation are:
 
 ![create-maze-button](./projetJava/images/createMazeBtn.png)
 
+4. A labyrinth is created with dimension given on the left side of window. All cases are empty by default. Click on "Modify" button. There are four radio buttons as options:
+    - Select Departure box
+    - Select Arrival box
+    - Select Wall box
+    - Deselect Box
+    
+![modify-button](./projetJava/images/modifyBtn.png)
+
+Choose one of the options depending your action. Click on the case where you want to change its type and the cases change its color depending on its type.
+
+![color-changed](./projetJava/images/colorChanged.png)
+
+Color panel indicating the four colors for four types of boxes (departure, arrival, wall, empty) is shown on right bottom side of window.
+
+5. Click on "Launch" button to launch Dijkstra algorithm to show shortest path.
+
+![algo-launched](./projetJava/images/algoLaunched.png)
+
+6. Click on "File" menu and "Save" item to save your labyrinth in text file.
+
+![file-menu](./projetJava/images/fileMenu.png)
+
+7. Import your labyrinth to reuse it by clicking on "Import" in "File" menu.
+
+8. You may modify color of the four types of boxes by clicking on "Configuration" menu.
+
+![Configuration-menu](./projetJava/images/configurationMenu.png)    ![color-chooser](./projetJava/images/colorChooser.png)
+
+
