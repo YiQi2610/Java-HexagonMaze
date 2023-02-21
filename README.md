@@ -29,7 +29,7 @@ The main functions of this applcation are:
 1. Download this application with git clone.
 2. In folder projetJava, go to folder src and run "MainFenetre.java" with an environment IDE (Eclipse prefered). An application interface appear as figure below.
 
-<img src="./projetJava/images/interface.png" width="450" height="350">
+<img src="./projetJava/images/interface.png" width="600" height="350">
 
 3. Click on "Create your Maze" button and give height and width to create an empty labyrinth.
 
@@ -45,7 +45,7 @@ The main functions of this applcation are:
 
 Choose one of the options depending your action. Click on the case where you want to change its type and the cases change its color depending on its type.
 
-![color-changed](./projetJava/images/colorChanged.png)
+<img src="./projetJava/images/colorChanged.png" width="450" height="350">
 
 Color panel indicating the four colors for four types of boxes (departure, arrival, wall, empty) is shown on right bottom side of window.
 
@@ -61,6 +61,6 @@ Color panel indicating the four colors for four types of boxes (departure, arriv
 
 8. You may modify color of the four types of boxes by clicking on "Configuration" menu.
 
-![Configuration-menu](./projetJava/images/configurationMenu.png)    ![color-chooser](./projetJava/images/colorChooser.png)
-
+![Configuration-menu](./projetJava/images/configurationMenu.png)  
+<img src="./projetJava/images/colorChooser.png" width="300" height="250">
 
