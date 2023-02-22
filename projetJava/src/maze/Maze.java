@@ -270,14 +270,17 @@ public class Maze implements graph.Graph {
 	 * @return list of neighbouring vertices
 	 */
 	public List<Vertex> getSuccessors(Vertex vertex) {
+		// Create an ArrayList to hold the neighboring vertices
 		List <Vertex> boxNeighbours = new ArrayList <Vertex>();
-
+		
+		// Get the x and y coordinates of the current vertex
 		int row = ((MazeBox)vertex).getxBox();
 		int col = ((MazeBox)vertex).getyBox();
 
-		//Left Neighbour, 
+		//Left Neighbour 
 		if(col != 0) {
 			MazeBox lNeighbour = labyrinthe[row][col-1];
+			// If the left neighbor exists and is not a wall, add it to the list of neighbor
 			if(!lNeighbour.isWall() && lNeighbour != null) {
 				boxNeighbours.add(lNeighbour);
 			}
@@ -286,6 +289,7 @@ public class Maze implements graph.Graph {
 		//Right Neighbour
 		if(col != largeurMaze-1) {
 			MazeBox rNeighbour = labyrinthe[row][col+1];
+			// If the right neighbor exists and is not a wall, add it to the list of neighbors
 			if(!rNeighbour.isWall() && rNeighbour != null) {
 				boxNeighbours.add(rNeighbour);
 			}
@@ -293,16 +297,17 @@ public class Maze implements graph.Graph {
 		
 		//Upright Neighbour
 		MazeBox urNeighbour = null;
-		if(row%2==0) { //row pair			
-			if(row>0) {
+		if(row%2==0) { //row is even			
+			if(row>0) {//first even row don't have upright neighbor
 				urNeighbour = labyrinthe[row-1][col];
 			}
 		}
-		else if(row%2!=0) {//row impair
-			if(col<largeurMaze-1) {
+		else if(row%2!=0) {//row is odd
+			if(col<largeurMaze-1) {//cases of last column in odd row don't have upright neighbor
 				urNeighbour = labyrinthe[row-1][col+1];
 			}
 		}
+		// If the upper-right neighbor exists and is not a wall, add it to the list of neighbors
 		if(urNeighbour != null && !urNeighbour.isWall()) {
 			boxNeighbours.add(urNeighbour);
 		}
@@ -310,14 +315,15 @@ public class Maze implements graph.Graph {
 
 		//Upleft Neighbour
 		MazeBox ulNeighbour = null;
-		if(row%2==0) { //row pair			
-			if(row>0 && col>0) {
+		if(row%2==0) { //row is even			
+			if(row>0 && col>0) {//starting from second row and second colomn as first column and first row don't have upleft neighbor
 				ulNeighbour = labyrinthe[row-1][col-1];
 			}
 		}		
-		else if(row%2!=0) {//row impair
-			ulNeighbour = labyrinthe[row-1][col];			
+		else if(row%2!=0) {//row is odd
+			ulNeighbour = labyrinthe[row-1][col];//every case of odd row has upright neighbor			
 		}
+		// If the upper-left neighbor exists and is not a wall, add it to the list of neighbors
 		if( ulNeighbour != null && !ulNeighbour.isWall()) {
 			boxNeighbours.add(ulNeighbour);
 		}
@@ -325,32 +331,34 @@ public class Maze implements graph.Graph {
 		
 		//DownRight Neighbour
 		MazeBox drNeighbour = null;
-		if(row%2==0) {//row pair
-			if(row <longueurMaze-1) {
+		if(row%2==0) {//row is even
+			if(row <longueurMaze-1) {//last row don;t have downright neigbor
 				drNeighbour = labyrinthe[row+1][col];
 			}
 		}
-		else if(row%2!=0) {//row impair
-			if(row<longueurMaze-1 && col <largeurMaze-1) {
+		else if(row%2!=0) {//row is odd
+			if(row<longueurMaze-1 && col <largeurMaze-1) {//for cases in last row and last column don't have downright neigbor
 				drNeighbour = labyrinthe[row+1][col+1];
 			}
 		}
+		// If the downright neighbor exists and is not a wall, add it to the list of neighbors
 		if( drNeighbour != null && !drNeighbour.isWall()) {
 			boxNeighbours.add(drNeighbour);
 		}
 
 		//DownLeft Neighbour
 		MazeBox dlNeighbour = null;
-		if(row%2==0) {//row pair
-			if(row <longueurMaze-1 && col >0) {
+		if(row%2==0) {//row is even
+			if(row <longueurMaze-1 && col >0) {//last row and first column don't have downleft neigbor
 				dlNeighbour = labyrinthe[row+1][col-1];
 			}
 		}
-		else if(row%2!=0) {//row impair
-			if(row<longueurMaze-1) {
+		else if(row%2!=0) {//row is odd
+			if(row<longueurMaze-1) {//last row don't have downleft neighbor
 				dlNeighbour = labyrinthe[row+1][col];
 			}
 		}
+		// If the downleft neighbor exists and is not a wall, add it to the list of neighbors
 		if(dlNeighbour != null && !dlNeighbour.isWall() ) {
 			boxNeighbours.add(dlNeighbour);
 		}
@@ -364,6 +372,7 @@ public class Maze implements graph.Graph {
 	 */
 	public List<Vertex> getAllVertexes() {
 		List<Vertex> listAllVertex = new ArrayList<Vertex>();
+		//add one by one all maze boxes in labyrinth in a list of vertexes (Mazebox is a vertex)
 		for (int i = 0; i<longueurMaze; i++) {
 			for(int j=0; j<largeurMaze; j++) {
 				listAllVertex.add(labyrinthe[i][j]);

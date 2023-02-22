@@ -7,6 +7,16 @@ import maze.Maze;
 
 public class Dijkstra {
 
+	/**
+	 * Djikstra algorithm to construct a shortest path from a starting point to an end point, here we find the mazeboxes connecting arrival box and departure box with minimum number of boxes
+	 * @param graph
+	 * @param startVertex
+	 * @param endVertex
+	 * @param processedVertexes
+	 * @param minDistance
+	 * @param shortestPaths
+	 * @return HashMap of shortestPaths with pairs of vertices selected
+	 */
 	public static ShortestPaths dijkstra (Graph graph, Vertex startVertex, Vertex endVertex, ProcessedVertexes processedVertexes, MinDistance minDistance, ShortestPaths shortestPaths ) {
 
 		//Set start vertex as pivot
@@ -15,16 +25,16 @@ public class Dijkstra {
 		//Add start vertex into list of processed vertexes
 		processedVertexes.addProcessedVertex(startVertex);
 
-		//Add the other vertexes except start Vertex into list of notProcessed Vertex
-		List<Vertex> notProcessedVertex = new ArrayList<Vertex>();
-		notProcessedVertex = graph.getAllVertexes();
-		notProcessedVertex.remove(startVertex);
+		//Add the other vertexes except start Vertex into list of allVertexes
+		List<Vertex> allVertexes = new ArrayList<Vertex>();
+		allVertexes = graph.getAllVertexes();
+		allVertexes.remove(startVertex);
 
 		//Set start vertex with 0 as min distance
 		minDistance.setMinDist(startVertex, 0);
 
 		//Set all other vertexes with infinity as min distance as they haven't be treated
-		for(Vertex vertex : notProcessedVertex) {
+		for(Vertex vertex : allVertexes) {
 			minDistance.setMinDist(vertex,Integer.MAX_VALUE);
 		}
 
@@ -60,23 +70,16 @@ public class Dijkstra {
 					}
 				}
 
-				//add the end vertex with its predecessor into shortest path
-//				if(nextPivot == endVertex) {
-//					shortestPaths.setPrevious(nextPivot, pivotVertex);
-//				}
 
 				//Set the next pivot vertex
 				pivotVertex = nextPivot;
 
 				//Add the next pivot in processed Vertexes and remove it from notProcessed Vertex
 				processedVertexes.addProcessedVertex(pivotVertex);
-		//		notProcessedVertex.remove(pivotVertex);
 			}
 		}
-
-		//shortestPathRes = (ShortestPaths) shortestPaths.getShortestPath(endVertex);
-
 		return shortestPaths ;
+
 	}
 
 
