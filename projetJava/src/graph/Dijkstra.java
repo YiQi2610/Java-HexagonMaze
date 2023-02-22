@@ -8,7 +8,6 @@ import maze.Maze;
 public class Dijkstra {
 
 	public static ShortestPaths dijkstra (Graph graph, Vertex startVertex, Vertex endVertex, ProcessedVertexes processedVertexes, MinDistance minDistance, ShortestPaths shortestPaths ) {
-		//ShortestPaths shortestPathRes = new ShortestPathsImpl();
 
 		//Set start vertex as pivot
 		Vertex pivotVertex = startVertex;

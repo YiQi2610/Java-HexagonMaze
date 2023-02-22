@@ -3,25 +3,26 @@ package graph;
 import java.util.List;
 
 public interface Graph {
-	
+		
 	/**
-	//To get quantity of vertex in a graph
-	public int getNumberVertex();
-	
-	//To get quantity of arcs/aretes in a graph
-	public int getNumberArc();
-	
-	//To get a vertex from graph with indice
-	public Vertex getVertex(int indice);
-	*/
-	
-	//To get a list of all vertexes in graph
+	 * To get a list of all vertices in graph, used in Dijsktra to find next pivot
+	 * @return a list of vertices
+	 */
 	public List<Vertex> getAllVertexes() ;
 	
-	//To get a list of sucessors of a vertex in graph
+	/**
+	 * To get a list of neighbouring vertices of a vertice in graph, used in Dijsktra to add elements in ShortestPaths
+	 * @param vertex
+	 * @return list of neighbouring vertices
+	 */
 	public List<Vertex> getSuccessors(Vertex vertex) ;
 	
-	//To get the weight between two vertexes
+	/**
+	 * To get the weight between two vertices, in our algorithm, weight between two vertices is always 1
+	 * @param src
+	 * @param dst
+	 * @return weight
+	 */
 	public int getWeight(Vertex src,Vertex dst) ;
 
 }

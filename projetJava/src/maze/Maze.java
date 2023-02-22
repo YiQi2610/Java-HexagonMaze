@@ -183,33 +183,33 @@ public class Maze implements graph.Graph {
 	
 	public void setTypeBox(int row, int col, char type) {
 		if(type == 'E') { 
-			if(this.labyrinthe[row][col].getName() == 'D') {
+			if(this.labyrinthe[row][col].isDeparture()) {
 				this.startBox = null;
 			}
-			else if(this.labyrinthe[row][col].getName() == 'A') {
+			else if(this.labyrinthe[row][col].isArrival()) {
 				this.endBox = null;
 			}
 			this.labyrinthe[row][col] = new EmptyBox(row,col,this);
 
 		}
 		else if(type == 'W') { 
-			if(this.labyrinthe[row][col].getName() == 'D') {
+			if(this.labyrinthe[row][col].isDeparture()) {
 				this.startBox = null;
 			}
-			else if(this.labyrinthe[row][col].getName() == 'A') {
+			else if(this.labyrinthe[row][col].isArrival()) {
 				this.endBox = null;
 			}
 			this.labyrinthe[row][col] = new WallBox(row,col,this);
 		}
 		else if(type == 'D') { 
-			if(this.labyrinthe[row][col].getName() == 'A') {
+			if(this.labyrinthe[row][col].isArrival()) {
 				this.endBox = null;
 			}
 			this.labyrinthe[row][col] = new DepartureBox(row,col,this);
 			setStartBox(labyrinthe[row][col]);
 		}
 		if(type == 'A') { 
-			if(this.labyrinthe[row][col].getName() == 'D') {
+			if(this.labyrinthe[row][col].isDeparture()) {
 				this.startBox = null;
 			}
 			this.labyrinthe[row][col] = new ArrivalBox(row,col,this);
@@ -230,6 +230,7 @@ public class Maze implements graph.Graph {
 			radius = (int) (sizePane/(longueurMaze*2));
 		}
 		this.radiusHexgon = radius;
+
 		for(int row=0; row<longueurMaze; row++) {
 			for(int col=0; col<largeurMaze; col++) {	
 				int cx = (int)(col*radius*1.5+radius);
@@ -237,11 +238,12 @@ public class Maze implements graph.Graph {
 				if(row % 2 != 0) {
 					cx += (0.75*radius);
 				}
-				if(labyrinthe[row][col].getName()=='E' && !labyrinthe[row][col].isPath()) {color = getEmptyBoxColor();}
-				else if (labyrinthe[row][col].getName()=='E' && labyrinthe[row][col].isPath()) {color = getPathBoxColor();}
-				else if (labyrinthe[row][col].getName()=='W') {color = getWallBoxColor();}
-				else if (labyrinthe[row][col].getName()=='A') {color = getArrBoxColor();}
-				else if (labyrinthe[row][col].getName()=='D') {color = getDepBoxColor();}
+
+				if(labyrinthe[row][col].isEmpty() && !labyrinthe[row][col].isPath()) {color = getEmptyBoxColor();}
+				if (labyrinthe[row][col].isEmpty() && labyrinthe[row][col].isPath()) {color = getPathBoxColor();}
+				if (labyrinthe[row][col].isWall()) {color = getWallBoxColor();}
+				if (labyrinthe[row][col].isArrival()) {color = getArrBoxColor();}
+				if (labyrinthe[row][col].isDeparture()) {color = getDepBoxColor();}
 				
 				this.labyrinthe[row][col].paint(graphics,radius,new Point(cx,cy),color);
 			}
@@ -261,15 +263,19 @@ public class Maze implements graph.Graph {
 		}
 	}
 
-	//Function of getting a list of successors of a mazebox
+	/**
+	 * To get a list of neighbouring vertices of a vertice in graph, used in Dijsktra to add elements in ShortestPaths
+	 * In our hexagon maze, every maze box has 6 neighbouring vertices, every neighbors will be added if it's not a wall box
+	 * @param vertex
+	 * @return list of neighbouring vertices
+	 */
 	public List<Vertex> getSuccessors(Vertex vertex) {
 		List <Vertex> boxNeighbours = new ArrayList <Vertex>();
 
 		int row = ((MazeBox)vertex).getxBox();
 		int col = ((MazeBox)vertex).getyBox();
-		Maze refLabyrinthe = ((MazeBox)vertex).getRefLabyrinthe();
 
-		//Left Neighbour
+		//Left Neighbour, 
 		if(col != 0) {
 			MazeBox lNeighbour = labyrinthe[row][col-1];
 			if(!lNeighbour.isWall() && lNeighbour != null) {
@@ -352,7 +358,10 @@ public class Maze implements graph.Graph {
 		return boxNeighbours;	
 	}
 
-	//To get a list of all vertexes in graph by returning a list all vertexes in labyrinthe
+	/**
+	 * To get a list of all vertices in graph, used in Dijsktra to find next pivot
+	 * @return a list of vertices
+	 */
 	public List<Vertex> getAllVertexes() {
 		List<Vertex> listAllVertex = new ArrayList<Vertex>();
 		for (int i = 0; i<longueurMaze; i++) {
@@ -363,7 +372,12 @@ public class Maze implements graph.Graph {
 		return listAllVertex;
 	}
 
-	//To get the weight between two vertexes
+	/**
+	 * To get the weight between two vertices, in our algorithm, weight between two vertices is always 1
+	 * @param src
+	 * @param dst
+	 * @return weight
+	 */
 	public int getWeight(Vertex src, Vertex dst) {
 		return 1;
 	}	

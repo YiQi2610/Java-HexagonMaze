@@ -1,8 +1,10 @@
 package view;
 
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JOptionPane;
 
@@ -18,18 +20,18 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	public final void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 	    int y = e.getY();
+	    System.out.println(x);
+	    System.out.println(y);
 	    int column = 0;
 	    int radius = mazeFenetre.getMazeModel().getRadiusHexagon();
 	    int row = (int) (y/(radius*1.35));
 	    if(row%2==0) {
-	    	//column = (int)((x+(radius*0.78))/(Math.sqrt(3)*radius));
-	    	column = (int) (x/(radius*Math.sqrt(3)));
+	    	column = (int) (x/(0.88*(radius*Math.sqrt(3))));
 	    }
 	    else {
-	    	//column = (int)((x+(radius*0.77)-(radius*Math.sqrt(3)/2))/(Math.sqrt(3)*radius));
-	    	column = (int) ((x-0.5*radius*Math.sqrt(3))/(radius*Math.sqrt(3)));
+	    	column = (int) ((x-0.5*radius*Math.sqrt(3))/(0.88*(radius*Math.sqrt(3))));
 	    }
-	    
+
 	    System.out.println(row);
 	    System.out.println(column);
 	    
@@ -48,6 +50,8 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	    else {mazeFenetre.getMazeModel().setTypeBox(row, column, type);}
 
 	}
+	
+	
 
 }
                                                                                             
