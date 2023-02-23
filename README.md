@@ -26,7 +26,7 @@ The main functions of this applcation are:
 - Import maze 
 
 ## How to run and use this application?
-1. Download this application with git clone. Make sure your current directory is **"projetJava"**, or else there will be problem of import and save file!!
+1. Download this application with git clone. Make sure your current directory is **"tung-ker-chee"**, or else there will be problem of import and save file!!
 
 2. In folder projetJava, go to folder src and run "MainFenetre.java" with an environment IDE (Eclipse prefered). An application interface appear as figure below.
 
