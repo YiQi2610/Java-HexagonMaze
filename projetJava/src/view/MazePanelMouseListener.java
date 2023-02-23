@@ -31,9 +31,6 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	    else {
 	    	column = (int) ((x-0.5*radius*Math.sqrt(3))/(0.88*(radius*Math.sqrt(3))));
 	    }
-
-	    System.out.println(row);
-	    System.out.println(column);
 	    
 	    if(row>mazeFenetre.getMazeModel().getLongueurMaze()-1 || column>mazeFenetre.getMazeModel().getLargeurMaze()-1) {
 	    	return;
