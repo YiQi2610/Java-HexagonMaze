@@ -79,8 +79,5 @@ public class Dijkstra {
 			}
 		}
 		return shortestPaths ;
-
 	}
-
-
 }

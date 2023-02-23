@@ -25,28 +25,21 @@ import graph.Vertex;
 
 public class Maze implements graph.Graph {
 
-	private int largeurMaze;
-	private int longueurMaze;
-	private MazeBox[][] labyrinthe;
-	private MazeBox startBox;
-	private MazeBox endBox;
-	private boolean modified =  false;
-	private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
-	private Color wallBoxColor;
-	private Color arrBoxColor;
-	private Color depBoxColor;
-	private Color emptyBoxColor;
-	private Color pathBoxColor;
-	private int radiusHexgon;
-	private char selectedTypeHexagon;
+	private int largeurMaze; // number of columns in labyrinth
+	private int longueurMaze; // number of rows in labyrinth
+	private MazeBox[][] labyrinthe; // 2D labyrinth which contains all mazeboxes
+	private MazeBox startBox; // departure maze box
+	private MazeBox endBox; // arrival maze box
+	private boolean modified =  false;// To know if the labyrinth has been modifies, false by default
+	private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>(); // listeners that observe this maze model
+	private Color wallBoxColor; // Color of wall box
+	private Color arrBoxColor; // Color of arrival box
+	private Color depBoxColor; // Color of departure box
+	private Color emptyBoxColor; // Color of empty box
+	private Color pathBoxColor; // Color of path box
+	private int radiusHexgon; // radis of hexagon in labyrinth
+	private char selectedTypeHexagon; // option chose when modifying type of mazebox (ex: if want to change any box into a wall box, the value is 'W')
 
-
-	public Maze(int largeurMaze, int longueurMaze) {
-		super();
-		this.largeurMaze = largeurMaze;
-		this.longueurMaze = longueurMaze; 
-		this.labyrinthe = new MazeBox[longueurMaze][largeurMaze];
-	}
 
 	public Maze() {
 		super();
@@ -60,7 +53,7 @@ public class Maze implements graph.Graph {
 		this.labyrinthe = new MazeBox[longueurMaze][largeurMaze];
 		for(int row = 0; row<longueurMaze ; row++) {
 			for(int col = 0; col<largeurMaze; col++) {
-				labyrinthe[row][col] = new EmptyBox(row, col,this);
+				labyrinthe[row][col] = new EmptyBox(row, col);
 			}
 		}
 	}
@@ -189,7 +182,7 @@ public class Maze implements graph.Graph {
 			else if(this.labyrinthe[row][col].isArrival()) {
 				this.endBox = null;
 			}
-			this.labyrinthe[row][col] = new EmptyBox(row,col,this);
+			this.labyrinthe[row][col] = new EmptyBox(row,col);
 
 		}
 		else if(type == 'W') { 
@@ -199,20 +192,20 @@ public class Maze implements graph.Graph {
 			else if(this.labyrinthe[row][col].isArrival()) {
 				this.endBox = null;
 			}
-			this.labyrinthe[row][col] = new WallBox(row,col,this);
+			this.labyrinthe[row][col] = new WallBox(row,col);
 		}
 		else if(type == 'D') { 
 			if(this.labyrinthe[row][col].isArrival()) {
 				this.endBox = null;
 			}
-			this.labyrinthe[row][col] = new DepartureBox(row,col,this);
+			this.labyrinthe[row][col] = new DepartureBox(row,col);
 			setStartBox(labyrinthe[row][col]);
 		}
 		if(type == 'A') { 
 			if(this.labyrinthe[row][col].isDeparture()) {
 				this.startBox = null;
 			}
-			this.labyrinthe[row][col] = new ArrivalBox(row,col,this);
+			this.labyrinthe[row][col] = new ArrivalBox(row,col);
 			setEndBox(labyrinthe[row][col]);
 		}
 		modified = true ; 
@@ -409,18 +402,18 @@ public class Maze implements graph.Graph {
 				int col = 0;
 				while(col<dimension[0]) {
 					if(line.charAt(col)=='D') {
-						newLabyrinthe[row][col] = new DepartureBox (row,col,this);
+						newLabyrinthe[row][col] = new DepartureBox (row,col);
 						this.startBox = newLabyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='E') {
-						newLabyrinthe[row][col] = new EmptyBox(row,col,this);
+						newLabyrinthe[row][col] = new EmptyBox(row,col);
 					}
 					else if(line.charAt(col)=='A') {
-						newLabyrinthe[row][col] = new ArrivalBox(row,col,this);
+						newLabyrinthe[row][col] = new ArrivalBox(row,col);
 						this.endBox = newLabyrinthe[row][col];
 					}
 					else if(line.charAt(col)=='W'){
-						newLabyrinthe[row][col] = new WallBox(row,col,this);
+						newLabyrinthe[row][col] = new WallBox(row,col);
 					}
 					else { //If none of these 4 caraceters in presented
 						throw new MazeReadingException(fileName,row+1,"Invalid label of Mazebox");
@@ -464,7 +457,7 @@ public class Maze implements graph.Graph {
 		MazeBox[][] newLabyrinthe = new MazeBox[heightGiven][widthGiven];
 		for(int row = 0; row<heightGiven ; row++) {
 			for(int col = 0; col<widthGiven; col++) {
-				newLabyrinthe[row][col] = new EmptyBox(row, col,this);
+				newLabyrinthe[row][col] = new EmptyBox(row, col);
 			}
 		}
 		this.setLabyrinthe(newLabyrinthe);

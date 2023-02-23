@@ -2,8 +2,8 @@ package maze;
 
 public class WallBox extends MazeBox { //Wall box belongs to mazebox but not emptybox
 		
-	public WallBox(int xBox, int yBox, Maze refLabyrinthe) {
-		super(xBox, yBox, refLabyrinthe);
+	public WallBox(int xBox, int yBox) {
+		super(xBox, yBox);
 		this.setName('W'); //label used to save a labyrinth in text file
 	}
 	
