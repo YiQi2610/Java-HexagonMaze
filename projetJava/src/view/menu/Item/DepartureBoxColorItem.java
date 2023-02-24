@@ -12,10 +12,15 @@ import view.MazeFenetre;
 public class DepartureBoxColorItem extends JMenuItem implements ActionListener{
 private final MazeFenetre mazeFenetre;
 	
+	/**
+	 * To change color of departure box by using JColorChooser
+	 * @param mazeFenetre
+	 */
 	public DepartureBoxColorItem(MazeFenetre mazeFenetre) {
 		super("Departure Box");
 		
 		this.mazeFenetre = mazeFenetre;
+		// Add listener to this menu item
 		addActionListener(this);
 	}
 
@@ -24,6 +29,9 @@ private final MazeFenetre mazeFenetre;
 		Color newDepBoxColor = JColorChooser.showDialog(mazeFenetre,
 				"Change departure box color",
 				mazeFenetre.getMazeModel().getDepBoxColor() );
+		//If no color is chosen, nothing is modified
+		if(newDepBoxColor==null) {return;}
+		// If user had chosen a color, set new color in maze model
 		mazeFenetre.getMazeModel().setDepBoxColor(newDepBoxColor);
 		
 	}
