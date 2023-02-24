@@ -20,8 +20,6 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	public final void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 	    int y = e.getY();
-	    System.out.println(x);
-	    System.out.println(y);
 	    int column = 0;
 	    int radius = mazeFenetre.getMazeModel().getRadiusHexagon();
 	    int row = (int) (y/(radius*1.35));

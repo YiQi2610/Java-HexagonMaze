@@ -13,22 +13,24 @@ import view.menu.MenuBar;
 
 public class MazeFenetre extends JFrame implements ChangeListener {
 	
-	private final MenuBar menuBar;
+	private final MenuBar menuBar; 
 	private final WindowPanel windowPanel;
 	private Maze mazeModel = new Maze();
 	
 	
 	public MazeFenetre() {
 		super("Find the shortest path!");
-		
+		//Window contains menu bar and window panel 
 		setJMenuBar(menuBar = new MenuBar(this));
 		setContentPane(windowPanel = new WindowPanel(this));
+		
+		//add this window as observer of our maze model
 		mazeModel.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//To adapt the size of window based on screen size
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    setSize(screenSize.width, screenSize.height);
-		//setPreferredSize(new Dimension(1500,800));		
-		//pack();
 		setVisible(true);
 	}
 		
@@ -41,6 +43,9 @@ public class MazeFenetre extends JFrame implements ChangeListener {
 	}
 
 	@Override
+	/**
+	 * Send message to our window panel for update when there is modification in maze model
+	 */
 	public void stateChanged(ChangeEvent e) {
 		try {
 			windowPanel.notifyForUpdate();
