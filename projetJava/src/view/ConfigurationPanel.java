@@ -20,6 +20,7 @@ public class ConfigurationPanel extends JPanel{
 	
 	public ConfigurationPanel(MazeFenetre mazeFenetre) {
 		this.mazeFenetre = mazeFenetre;
+		
 		//Use grid layout of 4x1 to have a vertical panel
 		setLayout(new GridLayout(4,1));
 		setSize(300,800);
@@ -27,6 +28,7 @@ public class ConfigurationPanel extends JPanel{
 		
 		add(dimensionPanel = new DimensionPanel(mazeFenetre));
 		add(selectionPanel = new SelectionPanel(mazeFenetre));
+		
 		//Add launch button to a panel so that the button will not get the whole size of grid (it will be too big)
 		JPanel launchbtnPane = new JPanel();
 		launchbtnPane.add(launchButton = new LaunchButton(mazeFenetre));

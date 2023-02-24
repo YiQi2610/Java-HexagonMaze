@@ -11,6 +11,7 @@ public class WindowPanel extends JPanel {
 
 	public WindowPanel(MazeFenetre mazeFenetre) {
 		setLayout(new BorderLayout()) ;
+		
 		//Add these two panels to window panel with their border layout
 		add(mazePanel = new MazePanel(mazeFenetre), BorderLayout.CENTER) ;
 		add(configurationPanel = new ConfigurationPanel(mazeFenetre),BorderLayout.EAST);
