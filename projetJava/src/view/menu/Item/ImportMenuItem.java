@@ -28,7 +28,7 @@ public class ImportMenuItem extends JMenuItem implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//Open folder "data" which contains all labyrinth text files saved
-		File folder = new File("data");
+		File folder = new File("./projetJava/data");
 		// Get a list of labyrinth files in this folder
 		File[] listOfFiles = folder.listFiles();
 		// Get number of labyrinth files
@@ -51,7 +51,7 @@ public class ImportMenuItem extends JMenuItem implements ActionListener{
 		else {
 			try {
 				//Get the file chosen and call function initFromTextFile from maze model to read and draw labyrinth
-				mazeFenetre.getMazeModel().initFromTextFile("data/"+input);							
+				mazeFenetre.getMazeModel().initFromTextFile("./projetJava/data/"+input);							
 			}catch(FileNotFoundException e1) {
 				e1.printStackTrace();
 			}catch (Exception e1) {
