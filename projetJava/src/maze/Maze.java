@@ -524,7 +524,7 @@ public class Maze implements graph.Graph {
 	public final void saveToTextFile(String fileName) throws Exception {
 		//For each mazebox in labyrinth, use printwriter to write its label into file given in parameter
 		//The file has the same number of rows and columns as the labyrinth
-		try (PrintWriter pw = new PrintWriter("data/"+fileName)) {
+		try (PrintWriter pw = new PrintWriter(fileName)) {
 			for(int i = 0; i<this.getLongueurMaze(); i++) {
 				for(int j = 0; j<this.getLargeurMaze(); j++) {
 					pw.print(this.labyrinthe[i][j].getName());

@@ -41,7 +41,7 @@ public class SaveMenuItem extends JMenuItem implements ActionListener{
 			
 			//If user clicks cancel, labyrinth will not be saved and user back to interface, to detect if user has clicked "Cancel", we see if fileName is null
 			if(fileName==null) {return;}
-			fileName = "./projetJava/"+fileName +".txt";
+			fileName = "./projetJava/data/"+fileName +".txt";
 			try {// If filename is not null, labyrinth will be saved in a text file with filename entered 
 				mazeFenetre.getMazeModel().saveToTextFile(fileName);
 				JOptionPane.showMessageDialog(null, "Your maze is saved as '" + fileName + " '.");
