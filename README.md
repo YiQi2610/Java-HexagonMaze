@@ -1,6 +1,6 @@
 # Maze Game - Find the shortest path!
 
-## Please run the program under directory "projetJava"!!!
+## Please run the program under directory "tung-ker-chee"!!!
 
 In this application, you can create a **hexagon** maze by giving its width and its height. By setting the starting point and end point, a shortest path will be shown on maze. There is also possibility to choose wall box where the path will be blocked. 
 
@@ -29,7 +29,7 @@ The main functions of this applcation are:
 - Import maze 
 
 ## How to run and use this application?
-1. Download this application with git clone. Make sure your current directory is **"projetJava"**, or else there will be problem of import and save file!!
+1. Download this application with git clone. Make sure your current directory is **"tung-ker-chee"**, or else there will be problem of import and save file!!
 
 2. In folder projetJava, go to folder src and run "MainFenetre.java" with an environment IDE (Eclipse prefered). An application interface appear as figure below.
 
