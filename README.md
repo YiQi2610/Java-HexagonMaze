@@ -9,7 +9,7 @@ This application is fully developped with [Java](https://www.java.com/en/) and i
 ## Summary
 - [What is the aim of project?](#what-is-the-aim-of-project-)
 - [How to run and use this application?](#how-to-run-and-use-this-application)
-- [Tips of usage](#tips-of-usage)
+- [Some improvements](#some-improvements)
 
 ## What is the aim of project?
 The goal of the project is to use implementation of **Dijkstra's algorithm** to solve a hexagonal maze and to provide a shortest path. Figure below shows an example of hexagonal maze with dimension of 10x10.
@@ -67,4 +67,14 @@ Color panel indicating the four colors for four types of boxes (departure, arriv
 
 ![Configuration-menu](./projetJava/images/configurationMenu.png)  
 <img src="./projetJava/images/colorChooser.png" width="350" height="250">
+
+## Some improvements
+
+- Mousemove to change color of maze boxes when cursor moves on labyrinth.
+- Mousedrag to set several maze boxes at one time to wall box.
+- Drag arrival box and shortest path changes simultaneously.
+- Get correct position of mazebox when we click on any point in hexagon. 
+- When dimension of labyrinth is greater, there are spaces between some maze boxes.
+
+### If there is any problem on running this program, please contact : ker.tung@telecom-paris.fr
 
