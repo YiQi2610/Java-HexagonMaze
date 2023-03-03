@@ -28,7 +28,7 @@ public class MazePanelMouseListener extends MouseAdapter implements MouseListene
 	    int radius = mazeFenetre.getMazeModel().getRadiusHexagon();
 	    
 	    // Find the row of maze box clicked with y coordinate of cursor
-	    int row = (int) (y/(radius*1.25));
+	    int row = (int) (y/(radius*1.3));
 	    
 	    // If the row found is even, find the column 
 	    // I tried using exact calculation but it doesn't work well so I multiply it with 0.88
